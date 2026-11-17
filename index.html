@@ -1,0 +1,3532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CAPITALLOOP — Wealth &amp; Product Hiring Platform</title>
+<meta name="description" content="CAPITALLOOP — Wealth & Product Hiring Platform">
+<meta property="og:title" content="CAPITALLOOP">
+<meta property="og:description" content="CAPITALLOOP — Wealth & Product Hiring Platform">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='13' fill='%2316291A'/%3E%3Cpath d='M24 5L40.5 14.5v19L24 43 7.5 33.5v-19z' fill='none' stroke='%23C9A96E' stroke-width='1.8'/%3E%3Cpath d='M29.6 18.2A8.5 8.5 0 1 0 29.6 29.8' fill='none' stroke='%23FCFBF8' stroke-width='2.7' stroke-linecap='round'/%3E%3Cpath d='M21.5 24c0-2.1 1.7-3.6 4.1-3.6 2.1 0 3.9 1.1 5.4 3.6-1.5 2.5-3.3 3.6-5.4 3.6-2.4 0-4.1-1.5-4.1-3.6z' fill='none' stroke='%23D9BD83' stroke-width='1.7' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg-cream: #F8F7F2;
+    --bg-ivory: #FCFBF8;
+    --sage-50: #F1F5F1;
+    --sage-100: #E3EBE3;
+    --sage-200: #C8D8C9;
+    --sage-400: #7A9E7E;
+    --sage-600: #4A7050;
+    --sage-800: #243E29;
+    --sage-900: #16291A;
+    --champagne: #C9A96E;
+    --champagne-light: #F5EFE2;
+    --champagne-dark: #9B7B42;
+    --text-dark: #16291A;
+    --text-muted: #5A6E5D;
+    --border-soft: rgba(36, 62, 41, 0.10);
+    --shadow-sm: 0 2px 10px rgba(22, 41, 26, 0.04);
+    --shadow-md: 0 8px 24px rgba(22, 41, 26, 0.07);
+    --danger: #B84A39;
+    --danger-bg: #FDF1EF;
+    --success: #2E6F40;
+    --success-bg: #EBF5EE;
+    --warning: #9B6B16;
+    --warning-bg: #FDF6E7;
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+    --font-serif: Georgia, "Times New Roman", serif;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    height: 100%;
+    background-color: #ECEAE2;
+    color: var(--text-dark);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.45;
+    overflow-x: hidden;
+  }
+
+  /* App Shell */
+  .app-shell {
+    max-width: 480px;
+    min-height: 100vh;
+    margin: 0 auto;
+    background-color: var(--bg-cream);
+    position: relative;
+    box-shadow: 0 0 40px rgba(22, 41, 26, 0.08);
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  /* View Management: Strict Single-Screen Visibility */
+  .screen {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    padding: 16px 16px 92px 16px;
+    animation: fadeIn 0.18s ease-out;
+  }
+  .screen.active {
+    display: flex;
+  }
+  .screen.auth-screen {
+    padding: 24px 20px 36px 20px;
+    justify-content: center;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Brand Header & Logo */
+  .brand-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    text-decoration: none;
+    color: var(--sage-900);
+  }
+  .brand-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    background: radial-gradient(circle at 28% 22%, #31593c 0%, #1d3a27 55%, #0f2117 100%);
+    border: 1.5px solid rgba(201, 169, 110, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--champagne-light);
+    box-shadow: 0 6px 16px rgba(22, 41, 26, 0.18), inset 0 1px 0 rgba(255, 248, 233, 0.22), inset 0 -1px 0 rgba(0, 0, 0, 0.28);
+    flex-shrink: 0;
+    overflow: hidden;
+    padding: 2px;
+  }
+  .brand-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .brand-name {
+    font-weight: 800;
+    font-size: 16.5px;
+    letter-spacing: 0.10em;
+    color: var(--sage-900);
+    line-height: 1.15;
+  }
+  .brand-sub {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--champagne-dark);
+    display: block;
+    margin-top: 1px;
+  }
+
+  /* Top Navigation Bar inside App */
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    min-height: 40px;
+  }
+  .top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .back-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--border-soft);
+    background: var(--bg-ivory);
+    color: var(--sage-900);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .back-btn:hover { background: var(--sage-100); }
+  .screen-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--sage-900);
+    letter-spacing: -0.01em;
+  }
+  .icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    border: 1px solid var(--border-soft);
+    background: var(--bg-ivory);
+    color: var(--sage-800);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+  }
+  .badge-dot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--champagne-dark);
+    border: 1.5px solid var(--bg-ivory);
+  }
+
+  /* Cards & Surfaces */
+  .card {
+    background: var(--bg-ivory);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 12px;
+  }
+  .card-sage {
+    background: var(--sage-50);
+    border: 1px solid rgba(74, 112, 80, 0.16);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .card-hero {
+    background: linear-gradient(155deg, var(--sage-800) 0%, var(--sage-900) 100%);
+    color: var(--bg-ivory);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(201, 169, 110, 0.35);
+    margin-bottom: 14px;
+  }
+
+  /* Forms & Inputs */
+  .form-group {
+    margin-bottom: 13px;
+  }
+  .form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--sage-800);
+    margin-bottom: 5px;
+    letter-spacing: 0.01em;
+  }
+  .input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .form-input {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(36, 62, 41, 0.18);
+    background: var(--bg-ivory);
+    color: var(--sage-900);
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--sage-600);
+    box-shadow: 0 0 0 3px rgba(74, 112, 80, 0.12);
+  }
+  .form-input.has-toggle {
+    padding-right: 44px;
+  }
+  .pwd-toggle {
+    position: absolute;
+    right: 4px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+  .pwd-toggle:hover { color: var(--sage-900); background: var(--sage-50); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 16px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
+    text-decoration: none;
+  }
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .btn-block { width: 100%; }
+  .btn-sm { height: 34px; padding: 0 12px; font-size: 12.5px; border-radius: 8px; }
+  .btn-primary {
+    background: var(--sage-800);
+    color: var(--bg-ivory);
+    border-color: var(--sage-800);
+  }
+  .btn-primary:hover:not(:disabled) { background: var(--sage-900); }
+  .btn-champagne {
+    background: var(--champagne);
+    color: var(--sage-900);
+    font-weight: 700;
+  }
+  .btn-champagne:hover:not(:disabled) { background: #bfa065; }
+  .btn-outline {
+    background: var(--bg-ivory);
+    color: var(--sage-800);
+    border-color: rgba(36, 62, 41, 0.22);
+  }
+  .btn-outline:hover:not(:disabled) { background: var(--sage-50); }
+  .btn-soft {
+    background: var(--sage-100);
+    color: var(--sage-900);
+  }
+  .btn-soft:hover:not(:disabled) { background: var(--sage-200); }
+  .btn-danger-soft {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border-color: rgba(184, 74, 57, 0.2);
+  }
+
+  /* Alerts & Validation */
+  .alert {
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 12.5px;
+    margin-bottom: 12px;
+    display: none;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .alert.show { display: flex; }
+  .alert-error { background: var(--danger-bg); color: var(--danger); border: 1px solid rgba(184,74,57,0.22); }
+  .alert-success { background: var(--success-bg); color: var(--success); border: 1px solid rgba(46,111,64,0.22); }
+  .alert-info { background: var(--champagne-light); color: var(--sage-900); border: 1px solid rgba(201,169,110,0.35); }
+
+  /* Grid Helpers */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+  /* Balance & Metric Tiles */
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .hero-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sage-200);
+  }
+  .hero-amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+    margin-top: 2px;
+  }
+  .pill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .pill-gold { background: rgba(201, 169, 110, 0.2); color: var(--champagne-light); border: 1px solid rgba(201, 169, 110, 0.4); }
+  .pill-green { background: var(--success-bg); color: var(--success); }
+  .pill-amber { background: var(--warning-bg); color: var(--warning); }
+  .pill-muted { background: var(--sage-100); color: var(--text-muted); }
+
+  .sub-balances {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    margin-bottom: 14px;
+  }
+  .sub-bal-label { font-size: 11px; color: var(--sage-200); }
+  .sub-bal-val { font-size: 14px; font-weight: 700; color: var(--champagne-light); margin-top: 1px; }
+
+  .stat-tile {
+    background: var(--bg-ivory);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    padding: 10px 11px;
+  }
+  .stat-tile-label { font-size: 11px; color: var(--text-muted); }
+  .stat-tile-val { font-size: 14px; font-weight: 700; color: var(--sage-900); margin-top: 2px; }
+
+  /* Section Headings */
+  .section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 14px 0 8px 0;
+  }
+  .section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--sage-900);
+  }
+  .section-link {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--sage-600);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  /* Product Catalogue — Compact Horizontal Rows */
+  .product-card {
+    background: var(--bg-ivory);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 11px 12px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .product-card:hover:not(.unavailable) {
+    border-color: rgba(36, 62, 41, 0.28);
+  }
+  .product-card.unavailable {
+    opacity: 0.76;
+    background: #F4F6F5;
+    cursor: default;
+  }
+  .product-thumb {
+    width: 78px;
+    height: 78px;
+    border-radius: 13px;
+    background: #FFFFFF;
+    border: 1px solid rgba(36, 62, 41, 0.12);
+    box-shadow: 0 2px 8px rgba(22, 41, 26, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    padding: 4px;
+  }
+  .product-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    border-radius: 9px;
+  }
+  .product-thumb .product-art { width:100%; height:100%; display:block; }
+  .product-detail-art { width:84px; height:84px; border-radius:14px; }
+  @media (max-width:360px) {
+    .product-thumb { width:68px; height:68px; padding:3px; }
+    .product-detail-art { width:74px; height:74px; }
+  }
+  .product-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .product-name {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--sage-900);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .product-price {
+    font-size: 13.5px;
+    font-weight: 800;
+    color: var(--sage-800);
+    margin: 2px 0 5px 0;
+  }
+  .returns-strip {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+  }
+  .ret-chip {
+    background: var(--sage-50);
+    border: 1px solid rgba(36,62,41,0.1);
+    border-radius: 6px;
+    padding: 2px 7px;
+    font-size: 11px;
+    color: var(--sage-900);
+  }
+  .ret-chip span { color: var(--text-muted); font-weight: 500; }
+  .ret-chip strong { font-weight: 700; color: var(--sage-800); }
+  .status-line {
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .status-avail { color: var(--success); }
+  .status-busy { color: var(--warning); }
+
+  /* Duration Selector */
+  .duration-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 12px 0;
+  }
+  .dur-option {
+    border: 1.5px solid var(--border-soft);
+    background: var(--bg-ivory);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+  }
+  .dur-option.selected {
+    border-color: var(--sage-800);
+    background: var(--sage-50);
+    box-shadow: 0 0 0 2px rgba(36, 62, 41, 0.1);
+  }
+  .dur-hours { font-size: 13px; font-weight: 700; color: var(--sage-900); }
+  .dur-return { font-size: 15px; font-weight: 700; color: var(--success); margin-top: 4px; }
+  .dur-gain { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* Key-Value Summary Rows */
+  .kv-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 13.5px;
+  }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-key { color: var(--text-muted); }
+  .kv-val { font-weight: 600; color: var(--sage-900); text-align: right; }
+
+  /* List & Transaction Rows */
+  .list-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 12px;
+    background: var(--bg-ivory);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+  }
+  .row-main { flex: 1; min-width: 0; }
+  .row-title { font-size: 13.5px; font-weight: 600; color: var(--sage-900); }
+  .row-sub { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+  .row-right { text-align: right; flex-shrink: 0; }
+  .row-amount { font-size: 13.5px; font-weight: 700; }
+  .amt-pos { color: var(--success); }
+  .amt-neg { color: var(--sage-900); }
+
+  /* Menu Rows (Mine Screen) */
+  .menu-list {
+    background: var(--bg-ivory);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .menu-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 14px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--sage-900);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item:hover { background: var(--sage-50); }
+  .menu-item-left { display: flex; align-items: center; gap: 11px; }
+  .menu-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--sage-50);
+    color: var(--sage-800);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Filter Chips */
+  .filter-bar {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+    scrollbar-width: none;
+  }
+  .filter-bar::-webkit-scrollbar { display: none; }
+  .chip {
+    padding: 6px 12px;
+    border-radius: 99px;
+    border: 1px solid var(--border-soft);
+    background: var(--bg-ivory);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .chip.active {
+    background: var(--sage-800);
+    color: var(--bg-ivory);
+    border-color: var(--sage-800);
+  }
+
+  /* Progress Bar for Active Hires */
+  .progress-track {
+    width: 100%;
+    height: 6px;
+    background: var(--sage-100);
+    border-radius: 99px;
+    overflow: hidden;
+    margin: 8px 0 6px 0;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sage-600), var(--champagne));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  /* Fixed Bottom Navigation */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    height: 68px;
+    background: rgba(252, 251, 248, 0.96);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border-soft);
+    display: none;
+    grid-template-columns: repeat(4, 1fr);
+    z-index: 50;
+    padding: 6px 8px;
+  }
+  .bottom-nav.visible { display: grid; }
+  .nav-btn {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .nav-btn.active {
+    color: var(--sage-900);
+    background: var(--sage-50);
+  }
+  .nav-btn.active svg { color: var(--sage-800); }
+
+  /* Toast Feedback */
+  .toast {
+    position: fixed;
+    top: 44px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-16px);
+    background: var(--sage-900);
+    color: var(--bg-ivory);
+    padding: 9px 16px;
+    border-radius: 99px;
+    font-size: 12.5px;
+    font-weight: 500;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(201,169,110,0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.22s ease;
+    z-index: 100;
+    max-width: 90%;
+    text-align: center;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Notification Unread Dot */
+  .notif-unread {
+    border-left: 3px solid var(--champagne-dark);
+    background: var(--sage-50);
+  }
+
+  /* Helper Text */
+  .muted-note {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .code-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--sage-50);
+    border: 1px dashed rgba(36,62,41,0.28);
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--sage-900);
+    overflow: hidden;
+  }
+  .code-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Home Dashboard: Wallet + High-Contrast RECHARGE/WITHDRAW + Light Active Hires Tracker */
+  .home-topbar{margin-bottom:10px}
+  .home-eyebrow{font-size:9.5px;letter-spacing:1.6px;font-weight:800;color:var(--champagne-dark)}
+  .home-name{font-size:16px;font-weight:800;color:var(--sage-900);margin-top:2px}
+  .home-welcome-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 10px}
+  .home-greeting{font-size:19px;font-weight:800;letter-spacing:-.5px;color:var(--sage-900)}
+  .home-subtitle,.home-section-caption{font-size:11px;color:var(--text-muted);margin-top:2px}
+  .home-help-link{border:0;background:none;color:var(--sage-700);font-size:11px;font-weight:700;white-space:nowrap}
+  .home-wallet{border:1px solid var(--border-soft);background:linear-gradient(135deg,#fffdf7,#edf3e9);border-radius:18px;padding:12px;margin:0 0 11px;box-shadow:0 5px 16px rgba(36,77,56,.05)}
+  .home-wallet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+  .home-wallet-title{font-size:12px;font-weight:800;color:var(--sage-900);display:flex;align-items:center;gap:7px}
+  .home-wallet-link{border:0;background:none;color:#1D4ED8;font-size:11px;font-weight:700;cursor:pointer}
+  .home-wallet-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .home-wallet-item{min-width:0;background:rgba(255,255,255,.82);border:1px solid rgba(83,117,85,.12);border-radius:12px;padding:9px 10px}
+  .home-wallet-item span{display:block;font-size:10px;color:var(--text-muted);line-height:1.25}
+  .home-wallet-item strong{display:block;font-size:13px;color:var(--sage-900);margin-top:4px;overflow-wrap:anywhere}
+  .home-wallet-item.primary-balance{grid-column:1/-1;background:linear-gradient(135deg,#244d38,#37664a);border:0;border-radius:15px;padding:14px 15px;box-shadow:0 7px 18px rgba(36,77,56,.16)}
+  .home-wallet-item.primary-balance span{font-size:11px;color:#dce9dc;font-weight:700;letter-spacing:.02em}
+  .home-wallet-item.primary-balance strong{font-size:27px;line-height:1.15;letter-spacing:-.7px;color:#fff;margin-top:6px}
+
+  /* Prominent Financial Actions */
+  .home-primary-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 13px}
+  .home-cta-btn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:10px 12px;border-radius:15px;cursor:pointer;font-family:inherit;text-align:left;border:none;transition:transform .12s ease,box-shadow .15s ease,filter .15s ease}
+  .home-cta-btn:active{transform:scale(.98)}
+  .home-cta-recharge{background:linear-gradient(135deg,#1E40AF 0%,#2563EB 100%);color:#FFFFFF;box-shadow:0 7px 18px rgba(37,99,235,.26)}
+  .home-cta-recharge:hover{filter:brightness(1.06)}
+  .home-cta-withdraw{background:linear-gradient(135deg,#B45309 0%,#D97706 100%);color:#FFFFFF;box-shadow:0 7px 18px rgba(180,83,9,.26)}
+  .home-cta-withdraw:hover{filter:brightness(1.06)}
+  .home-cta-icon{width:35px;height:35px;border-radius:10px;display:grid;place-items:center;flex-shrink:0;background:rgba(255,255,255,.20);border:1px solid rgba(255,255,255,.28);color:#FFFFFF}
+  .home-cta-copy{display:flex;flex-direction:column;min-width:0}
+  .home-cta-label{font-size:14px;font-weight:800;letter-spacing:.05em;line-height:1.1}
+  .home-cta-sub{font-size:10px;color:rgba(255,255,255,.9);margin-top:2px;font-weight:600}
+
+  /* Light Active Hires Tracker (Ice Blue & Soft Lavender) */
+  .active-focus{background:linear-gradient(145deg,#EFF6FF 0%,#F5F3FF 100%);color:#0F172A;border:1.5px solid #BFDBFE;border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 6px 18px rgba(37,99,235,.07)}
+  .active-focus-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .active-focus-kicker{font-size:10px;letter-spacing:.09em;font-weight:800;color:#1D4ED8;display:flex;align-items:center;gap:6px}
+  .live-pulse{width:8px;height:8px;border-radius:50%;background:#16A34A;box-shadow:0 0 0 4px rgba(22,163,74,.18)}
+  .active-focus-title{font-size:17px;font-weight:800;letter-spacing:-.3px;color:#0F172A;margin-top:3px}
+  .active-count-wrap{min-width:62px;text-align:center;background:#1D4ED8;border-radius:12px;padding:6px 10px;box-shadow:0 4px 10px rgba(29,78,216,.22)}
+  .active-count-wrap strong{display:block;font-size:21px;line-height:1.05;color:#FFFFFF}
+  .active-count-wrap span{font-size:8.5px;letter-spacing:.08em;color:#DBEAFE;font-weight:800}
+  .active-focus-list{margin-top:11px;display:flex;flex-direction:column;gap:9px}
+  .active-tracker-card{width:100%;display:flex;flex-direction:column;gap:8px;text-align:left;padding:11px;background:#FFFFFF;border:1px solid #DBEAFE;border-radius:13px;cursor:pointer;box-shadow:0 2px 8px rgba(15,23,42,.04);transition:border-color .15s}
+  .active-tracker-card:hover{border-color:#93C5FD}
+  .active-tracker-top{display:flex;align-items:center;gap:10px}
+  .active-hire-thumb{width:44px;height:44px;border-radius:10px;background:#FFFFFF;border:1px solid #E2E8F0;padding:3px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .active-hire-thumb img{width:100%;height:100%;object-fit:contain;display:block}
+  .active-hire-main{min-width:0;flex:1}
+  .active-hire-name{font-size:13px;font-weight:700;color:#0F172A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .active-hire-amounts{font-size:11px;color:#475569;margin-top:2px}
+  .active-hire-amounts strong{color:#15803D}
+  .active-status-tag{background:#DCFCE7;color:#166534;border:1px solid #BBF7D0;border-radius:6px;padding:2px 7px;font-size:10px;font-weight:700;flex-shrink:0}
+  .active-timer-row{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:9px;padding:6px 9px}
+  .live-timer-box{font-family:monospace;font-size:12.5px;font-weight:700;color:#1D4ED8}
+  .live-pct-text{font-size:11px;font-weight:700;color:#475569}
+  .active-progress{height:6px;background:#E2E8F0;border-radius:99px;overflow:hidden}
+  .active-progress i{height:100%;display:block;background:linear-gradient(90deg,#2563EB,#0D9488);border-radius:99px;transition:width .4s ease}
+  .completed-mini-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;background:#F8FAFC;border:1px dashed #CBD5E1;border-radius:11px;opacity:.68}
+  .completed-mini-title{font-size:12px;font-weight:600;color:#475569}
+  .expired-strike{text-decoration:line-through;color:#64748B;font-size:11px;font-family:monospace}
+  .completed-hire-card{background:#F8FAFC;border:1px solid #CBD5E1;opacity:0.72}
+  .active-focus-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #DBEAFE;padding-top:10px;margin-top:10px;font-size:11px;color:#475569}
+  .active-focus-footer button,.active-more{border:0;background:none;color:#1D4ED8;font-size:11px;font-weight:800;cursor:pointer}
+  .active-empty{display:flex;align-items:center;gap:10px;padding:10px;background:#FFFFFF;border:1px solid #DBEAFE;border-radius:12px}
+  .active-empty-icon{width:34px;height:34px;border-radius:10px;background:#EFF6FF;color:#1D4ED8;display:grid;place-items:center;font-size:17px;flex-shrink:0}
+  .active-empty div:nth-child(2){display:flex;flex:1;flex-direction:column;gap:2px}
+  .active-empty strong{font-size:12px;color:#0F172A}.active-empty span{font-size:10.5px;color:#64748B}
+  .active-empty button{border:0;background:#1D4ED8;color:#FFFFFF;border-radius:9px;padding:7px 11px;font-size:11px;font-weight:700;cursor:pointer}
+  .active-more{padding:4px 0 0;text-align:left}
+  .home-section-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+  .home-section-title{font-size:14px;font-weight:800;color:var(--sage-900)}
+  .home-discovery-card{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--border-soft);background:linear-gradient(110deg,#f4f2e7,#e8f0e5);border-radius:17px;padding:14px}
+  .home-discovery-tag{font-size:8px;letter-spacing:1.1px;font-weight:800;color:var(--sage-700)}
+  .home-discovery-title{font-size:14px;font-weight:800;color:var(--sage-900);margin:5px 0 2px}
+  .home-discovery-copy{font-size:10px;color:var(--text-muted);margin-bottom:9px}
+  .home-discovery-symbol{width:55px;height:55px;border-radius:17px;background:rgba(67,105,75,.1);display:grid;place-items:center;color:var(--sage-700);font-size:29px;flex:none}
+  @media(max-width:360px){.home-greeting{font-size:17px}.home-cta-btn{min-height:50px;padding:8px 10px;gap:8px}.home-cta-label{font-size:12.5px}.home-wallet-item{padding:8px 6px}.home-wallet-item strong{font-size:11px}.home-wallet-item.primary-balance{padding:12px}.home-wallet-item.primary-balance strong{font-size:24px}}
+</style>
+
+<style id="cl-green-brand-styles">
+  /* CAPITALLOOP permanent green theme, including the active-hire area. */
+  .active-focus{background:linear-gradient(145deg,#EBF5EE 0%,#F1F5F1 100%);color:#16291A;border-color:#C8D8C9;box-shadow:0 6px 18px rgba(46,111,64,.08)}
+  .active-focus-kicker,.active-focus-footer button,.active-more,.active-empty-icon{color:#2E6F40}
+  .active-count-wrap,.active-empty button{background:#2E6F40}
+  .active-count-wrap{box-shadow:0 4px 10px rgba(46,111,64,.18)}
+  .active-tracker-card,.active-empty{border-color:#C8D8C9}
+  .active-progress i{background:linear-gradient(90deg,#2E6F40,#23966f)}
+  .live-timer-box{color:#2E6F40}
+  .active-empty-icon{background:#EBF5EE}
+</style>
+
+
+<style id="cl-prominent-purchase-prices">
+  /* Purchase price is the primary decision point on every package card. */
+  #products-list .product-price{
+    display:block;
+    width:fit-content;
+    max-width:100%;
+    margin:7px 0 9px;
+    padding:7px 11px 8px;
+    border:1.5px solid #A7D7C2;
+    border-radius:11px;
+    background:#EAF6EF;
+    color:#075C40;
+    font-size:clamp(18px,4.8vw,22px);
+    line-height:1.15;
+    font-weight:900;
+    letter-spacing:-.35px;
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+  }
+  #products-list .product-price::before{
+    content:"PURCHASE PRICE";
+    display:block;
+    margin-bottom:3px;
+    color:#39745B;
+    font-size:9px;
+    line-height:1.1;
+    font-weight:800;
+    letter-spacing:.8px;
+  }
+  #products-list .product-card{align-items:center}
+  #products-list .product-info{align-self:center}
+  .cl-detail-purchase-price{
+    display:inline-flex;
+    flex-direction:column;
+    gap:3px;
+    margin-top:8px;
+    padding:9px 12px;
+    border:1.5px solid #A7D7C2;
+    border-radius:12px;
+    background:#EAF6EF;
+    color:#075C40;
+    font-size:23px;
+    line-height:1.12;
+    font-weight:900;
+    letter-spacing:-.4px;
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+  }
+  .cl-detail-purchase-price small{
+    color:#39745B;
+    font-size:9px;
+    line-height:1.1;
+    font-weight:800;
+    letter-spacing:.85px;
+  }
+  @media(max-width:380px){
+    #products-list .product-price{font-size:18px;padding:6px 8px}
+    #products-list .product-price::before{font-size:8px}
+    .cl-detail-purchase-price{font-size:21px}
+  }
+</style>
+
+</head>
+<body>
+
+<div class="app-shell">
+  <!-- CAPITALLOOP customer website -->
+
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- =========================================================
+       SCREEN 1: LOGIN
+  ========================================================== -->
+  <section id="screen-login" class="screen auth-screen active" aria-label="Sign In">
+    <div style="text-align:center; margin-bottom:22px;">
+      <div class="brand-mark" style="justify-content:center;">
+        <div class="brand-icon"><svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="cl-glow-login" cx="50%" cy="42%" r="55%"><stop offset="0%" stop-color="#3c6a4a" stop-opacity=".55"/><stop offset="100%" stop-color="#102319" stop-opacity="0"/></radialGradient><linearGradient id="cl-gold-login" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f6e3b4"/><stop offset="55%" stop-color="#d7b674"/><stop offset="100%" stop-color="#b58d46"/></linearGradient></defs><circle cx="24" cy="24" r="19" fill="url(#cl-glow-login)"/><path d="M24 5 40.5 14.5v19L24 43 7.5 33.5v-19Z" fill="none" stroke="url(#cl-gold-login)" stroke-width="1.6" stroke-linejoin="round"/><path d="M24 8.2 37.7 16.1v15.8L24 39.8 10.3 31.9V16.1Z" fill="none" stroke="#d9bd83" stroke-opacity=".28" stroke-width="1" stroke-linejoin="round"/><path d="M24 6.5v3.2M24 38.3v3.2" stroke="url(#cl-gold-login)" stroke-width="1.4" stroke-linecap="round"/><path d="M30.2 17.8a8.8 8.8 0 1 0 0 12.4" fill="none" stroke="#fff8e9" stroke-width="2.7" stroke-linecap="round"/><path d="M21.4 24c0-2.2 1.8-3.8 4.2-3.8 2.2 0 4.1 1.2 5.6 3.8-1.5 2.6-3.4 3.8-5.6 3.8-2.4 0-4.2-1.6-4.2-3.8Z" fill="none" stroke="url(#cl-gold-login)" stroke-width="1.8" stroke-linejoin="round"/><circle cx="31.2" cy="24" r="1.35" fill="#fff8e9"/></svg></div>
+        <div style="text-align:left;">
+          <span class="brand-name">CAPITALLOOP</span>
+          <span class="brand-sub">Package Hiring</span>
+        </div>
+      </div>
+      <h1 style="font-size:21px; color:var(--sage-900); margin-top:16px;">Welcome Back</h1>
+      <p class="muted-note" style="margin-top:4px;">Sign in to manage your account.</p>
+    </div>
+
+    <div class="card" style="padding:18px;">
+      <div id="login-alert" class="alert alert-error"></div>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="login-phone">Phone Number</label>
+          <input class="form-input" id="login-phone" type="tel" inputmode="numeric" maxlength="16" placeholder="07XXXXXXXX" value="" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="login-password">Password</label>
+          <div class="input-wrap">
+            <input class="form-input has-toggle" id="login-password" type="password" placeholder="Enter your password" value="" required>
+            <button type="button" class="pwd-toggle" data-target="login-password" aria-label="Toggle password visibility"></button>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <label style="display:inline-flex; align-items:center; gap:6px; font-size:12.5px; color:var(--text-muted); cursor:pointer;">
+            <input type="checkbox" id="login-remember" checked style="accent-color:var(--sage-800);">
+            Keep session active
+          </label>
+          
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="login-submit-btn">Sign In</button>
+      </form>
+    </div>
+
+    <div style="text-align:center; margin-top:14px;">
+      <span class="muted-note">New to CAPITALLOOP?</span>
+      <button type="button" class="section-link" style="margin-left:4px;" onclick="navigateTo('register')">Create an Account</button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 2: REGISTRATION
+  ========================================================== -->
+  <section id="screen-register" class="screen auth-screen" aria-label="Create Account">
+    <div style="text-align:center; margin-bottom:18px;">
+      <div class="brand-mark" style="justify-content:center;">
+        <div class="brand-icon"><svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="cl-glow-reg" cx="50%" cy="42%" r="55%"><stop offset="0%" stop-color="#3c6a4a" stop-opacity=".55"/><stop offset="100%" stop-color="#102319" stop-opacity="0"/></radialGradient><linearGradient id="cl-gold-reg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f6e3b4"/><stop offset="55%" stop-color="#d7b674"/><stop offset="100%" stop-color="#b58d46"/></linearGradient></defs><circle cx="24" cy="24" r="19" fill="url(#cl-glow-reg)"/><path d="M24 5 40.5 14.5v19L24 43 7.5 33.5v-19Z" fill="none" stroke="url(#cl-gold-reg)" stroke-width="1.6" stroke-linejoin="round"/><path d="M24 8.2 37.7 16.1v15.8L24 39.8 10.3 31.9V16.1Z" fill="none" stroke="#d9bd83" stroke-opacity=".28" stroke-width="1" stroke-linejoin="round"/><path d="M24 6.5v3.2M24 38.3v3.2" stroke="url(#cl-gold-reg)" stroke-width="1.4" stroke-linecap="round"/><path d="M30.2 17.8a8.8 8.8 0 1 0 0 12.4" fill="none" stroke="#fff8e9" stroke-width="2.7" stroke-linecap="round"/><path d="M21.4 24c0-2.2 1.8-3.8 4.2-3.8 2.2 0 4.1 1.2 5.6 3.8-1.5 2.6-3.4 3.8-5.6 3.8-2.4 0-4.2-1.6-4.2-3.8Z" fill="none" stroke="url(#cl-gold-reg)" stroke-width="1.8" stroke-linejoin="round"/><circle cx="31.2" cy="24" r="1.35" fill="#fff8e9"/></svg></div>
+        <div style="text-align:left;">
+          <span class="brand-name">CAPITALLOOP</span>
+          <span class="brand-sub">Member Onboarding</span>
+        </div>
+      </div>
+      <h1 style="font-size:20px; color:var(--sage-900); margin-top:14px;">Create Account</h1>
+      <p class="muted-note" style="margin-top:3px;">Create your CAPITALLOOP account to get started.</p>
+    </div>
+
+    <div class="card" style="padding:18px;">
+      <div id="reg-alert" class="alert"></div>
+
+      <form id="register-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="reg-username">Username</label>
+          <input class="form-input" id="reg-username" type="text" placeholder="e.g. Grace Namukasa" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-phone">Phone Number (07XXXXXXXX)</label>
+          <input class="form-input" id="reg-phone" type="tel" inputmode="numeric" maxlength="16" placeholder="07XXXXXXXX" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-password">Password (minimum 8 characters)</label>
+          <div class="input-wrap">
+            <input class="form-input has-toggle" id="reg-password" type="password" placeholder="At least 8 characters" required>
+            <button type="button" class="pwd-toggle" data-target="reg-password" aria-label="Toggle password visibility"></button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-confirm">Confirm Password</label>
+          <div class="input-wrap">
+            <input class="form-input has-toggle" id="reg-confirm" type="password" placeholder="Re-enter password" required>
+            <button type="button" class="pwd-toggle" data-target="reg-confirm" aria-label="Toggle password visibility"></button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-ref">Referral Code (Optional)</label>
+          <input class="form-input" id="reg-ref" type="text" placeholder="e.g. LOOP8821">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="reg-submit-btn">Create Account</button>
+      </form>
+    </div>
+
+    <div style="text-align:center; margin-top:12px;">
+      <span class="muted-note">Already have an account?</span>
+      <button type="button" class="section-link" style="margin-left:4px;" onclick="navigateTo('login')">Sign In</button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 3: HOME DASHBOARD
+  ========================================================== -->
+  <section id="screen-home" class="screen" aria-label="Home Dashboard">
+    <div class="top-bar home-topbar">
+      <div class="brand-mark">
+        <div class="brand-icon" style="width:40px;height:40px;"><svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="cl-glow-home" cx="50%" cy="42%" r="55%"><stop offset="0%" stop-color="#3c6a4a" stop-opacity=".55"/><stop offset="100%" stop-color="#102319" stop-opacity="0"/></radialGradient><linearGradient id="cl-gold-home" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f6e3b4"/><stop offset="55%" stop-color="#d7b674"/><stop offset="100%" stop-color="#b58d46"/></linearGradient></defs><circle cx="24" cy="24" r="19" fill="url(#cl-glow-home)"/><path d="M24 5 40.5 14.5v19L24 43 7.5 33.5v-19Z" fill="none" stroke="url(#cl-gold-home)" stroke-width="1.6" stroke-linejoin="round"/><path d="M24 8.2 37.7 16.1v15.8L24 39.8 10.3 31.9V16.1Z" fill="none" stroke="#d9bd83" stroke-opacity=".28" stroke-width="1" stroke-linejoin="round"/><path d="M24 6.5v3.2M24 38.3v3.2" stroke="url(#cl-gold-home)" stroke-width="1.4" stroke-linecap="round"/><path d="M30.2 17.8a8.8 8.8 0 1 0 0 12.4" fill="none" stroke="#fff8e9" stroke-width="2.7" stroke-linecap="round"/><path d="M21.4 24c0-2.2 1.8-3.8 4.2-3.8 2.2 0 4.1 1.2 5.6 3.8-1.5 2.6-3.4 3.8-5.6 3.8-2.4 0-4.2-1.6-4.2-3.8Z" fill="none" stroke="url(#cl-gold-home)" stroke-width="1.8" stroke-linejoin="round"/><circle cx="31.2" cy="24" r="1.35" fill="#fff8e9"/></svg></div>
+        <div><div class="home-eyebrow">CAPITALLOOP</div><div id="home-username" class="home-name">Member</div></div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button type="button" class="icon-btn" onclick="navigateTo('notifications')" aria-label="Notifications"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span id="home-notif-dot" class="badge-dot" style="display:none;"></span></button>
+        <button type="button" class="icon-btn" onclick="navigateTo('mine')" aria-label="Profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
+      </div>
+    </div>
+
+    <div class="home-welcome-row"><div><div class="home-greeting">Good to see you</div><div class="home-subtitle">Your wallet and active hires.</div></div></div>
+
+    <section class="home-wallet" aria-label="Wallet balances">
+      <div class="home-wallet-head"><div class="home-wallet-title"><span>▣</span> My Wallet</div><button type="button" class="home-wallet-link" onclick="navigateTo('transactions')">View activity →</button></div>
+      <div class="home-wallet-grid">
+        <div class="home-wallet-item primary-balance"><span>Balance</span><strong id="home-withdrawable-balance">UGX 0</strong></div>
+        <div class="home-wallet-item"><span>Recharge balance</span><strong id="home-deposit-balance">UGX 0</strong></div>
+        <div class="home-wallet-item"><span>Locked earnings</span><strong id="home-locked-balance">UGX 0</strong></div>
+      </div>
+    </section>
+
+    <div class="home-primary-actions" aria-label="Primary wallet actions">
+      <button type="button" class="home-cta-btn home-cta-recharge" onclick="navigateTo('deposit')">
+        <span class="home-cta-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </span>
+        <span class="home-cta-copy">
+          <span class="home-cta-label">RECHARGE</span>
+          <span class="home-cta-sub">Top up wallet</span>
+        </span>
+      </button>
+      <button type="button" class="home-cta-btn home-cta-withdraw" onclick="navigateTo('withdraw')">
+        <span class="home-cta-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </span>
+        <span class="home-cta-copy">
+          <span class="home-cta-label">WITHDRAW</span>
+          <span class="home-cta-sub">No minimum payout</span>
+        </span>
+      </button>
+    </div>
+
+    <section class="active-focus" aria-label="Active hires overview">
+      <div class="active-focus-top">
+        <div>
+          <div class="active-focus-kicker"><span class="live-pulse"></span> LIVE COUNTDOWN TRACKER</div>
+          <div class="active-focus-title">Active Hires</div>
+        </div>
+        <div class="active-count-wrap"><strong id="home-active-count">0</strong><span>ACTIVE</span></div>
+      </div>
+      <div id="home-active-preview" class="active-focus-list"></div>
+      <div class="active-focus-footer">
+        <span id="home-completed-count">0 completed</span>
+        <button type="button" onclick="navigateTo('my-products')">Manage &amp; view all →</button>
+      </div>
+    </section>
+
+    <div class="home-section-heading"><div><div class="home-section-title">Explore packages</div><div class="home-section-caption">Compare compact package tiers and hiring returns.</div></div></div>
+    <button type="button" class="home-discovery-card" style="width:100%;text-align:left;cursor:pointer" onclick="navigateTo('products')"><div><span class="home-discovery-tag">12H / 24H OPTIONS</span><div class="home-discovery-title">View available packages</div><div class="home-discovery-copy">Compare prices and expected returns.</div><span class="section-link">Browse packages →</span></div><div class="home-discovery-symbol">✦</div></button>
+  </section>
+
+  <section id="screen-products" class="screen" aria-label="Product Catalogue">
+    <div class="top-bar">
+      <div>
+        <h1 class="screen-title">Package Catalogue</h1>
+        <div class="muted-note">Select a package to choose 12h or 24h hiring duration</div>
+      </div>
+      <button type="button" class="btn btn-soft btn-sm" onclick="navigateTo('my-products')">My Hires</button>
+    </div>
+
+    <div class="card-sage" style="padding:10px 12px; display:flex; justify-content:space-between; align-items:center;">
+      <span style="font-size:12px; color:var(--sage-800); font-weight:600;">Available Recharge Balance</span>
+      <span id="prod-dep-bal" style="font-size:14px; font-weight:700; color:var(--sage-900);">UGX 0</span>
+    </div>
+
+    <div id="products-list"></div>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 5: PRODUCT DETAILS & DURATION SELECTION
+  ========================================================== -->
+  <section id="screen-product-details" class="screen" aria-label="Product Details">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button type="button" class="back-btn" onclick="goBack()" aria-label="Go Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <h1 class="screen-title">Package Details</h1>
+      </div>
+    </div>
+
+    <div id="product-details-content"></div>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 6: PURCHASE CONFIRMATION
+  ========================================================== -->
+  <section id="screen-purchase-confirmation" class="screen" aria-label="Purchase Confirmation">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button type="button" class="back-btn" onclick="goBack()" aria-label="Go Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <h1 class="screen-title">Confirm Hire</h1>
+      </div>
+    </div>
+
+    <div id="purchase-confirm-content"></div>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 7: MY PRODUCTS / ACTIVE HIRES
+  ========================================================== -->
+  <section id="screen-my-products" class="screen" aria-label="My Active Hires">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button type="button" class="back-btn" onclick="goBack()" aria-label="Go Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <h1 class="screen-title">My Products &amp; Hires</h1>
+      </div>
+      <button type="button" class="btn btn-primary btn-sm" onclick="navigateTo('products')">+ New Hire</button>
+    </div>
+
+    <div class="alert alert-info show" style="font-size:11.5px;">
+      <span>Active hires count down using server timestamps. Returns are credited only after backend maturity confirmation.</span>
+    </div>
+
+    <div class="section-head">
+      <h2 class="section-title">Active Working Hires</h2>
+      <span id="active-hires-badge" class="pill-badge pill-green">0 Active</span>
+    </div>
+    <div id="active-hires-container"></div>
+
+    <div class="section-head" style="margin-top:18px;">
+      <h2 class="section-title">Completed Hires</h2>
+      <span id="completed-hires-badge" class="pill-badge pill-muted">0 Completed</span>
+    </div>
+    <div id="completed-hires-container"></div>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 8: NETWORK & REFERRALS
+  ========================================================== -->
+  <section id="screen-network" class="screen" aria-label="Referral Network">
+    <div class="top-bar">
+      <div>
+        <h1 class="screen-title">Team &amp; Network</h1>
+        <div class="muted-note">Invite members and track verified team activity</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="form-label">Your Referral Code</div>
+      <div class="code-box" style="margin-bottom:10px;">
+        <span id="net-ref-code" class="code-text">LOOP0000</span>
+        <button type="button" class="btn btn-primary btn-sm" onclick="copyText('net-ref-code', 'Referral code copied')">Copy Code</button>
+      </div>
+
+      <div class="form-label">Your Referral Link</div>
+      <div class="code-box">
+        <span id="net-ref-link" class="code-text">https://capitalloop.app/join?ref=LOOP0000</span>
+        <button type="button" class="btn btn-soft btn-sm" onclick="copyText('net-ref-link', 'Referral link copied')">Copy Link</button>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:12px;">
+      <div class="stat-tile">
+        <div class="stat-tile-label">Team Size</div>
+        <div id="net-team-size" class="stat-tile-val">0 Members</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-label">Active Referrals</div>
+        <div id="net-active-refs" class="stat-tile-val" style="color:var(--sage-600);">0 Active</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-label">Total Team Collection</div>
+        <div id="net-team-collection" class="stat-tile-val">UGX 0</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-label">Referral Rewards</div>
+        <div id="net-ref-rewards" class="stat-tile-val" style="color:var(--success);">UGX 0</div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <h2 class="section-title">Invited Team Members</h2>
+    </div>
+    <div id="network-list"></div>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 9: MINE / ACCOUNT PROFILE
+  ========================================================== -->
+  <section id="screen-mine" class="screen" aria-label="My Account">
+    <div class="top-bar">
+      <h1 class="screen-title">My Account</h1>
+      <span class="pill-badge pill-green">Active Member</span>
+    </div>
+
+    <div class="card" style="display:flex; align-items:center; gap:14px;">
+      <div id="mine-avatar" style="width:52px; height:52px; border-radius:16px; background:var(--sage-800); color:var(--champagne-light); font-weight:700; font-size:18px; display:flex; align-items:center; justify-content:center; border:1.5px solid var(--champagne); flex-shrink:0;">CL</div>
+      <div style="flex:1; min-width:0;">
+        <div id="mine-username" style="font-size:16px; font-weight:700; color:var(--sage-900);">Member</div>
+        <div id="mine-phone" class="muted-note" style="font-size:13px;">07XXXXXXXX</div>
+        <div style="font-size:11px; color:var(--sage-600); margin-top:2px;">ID: <span id="mine-ref-id">LOOP0000</span></div>
+      </div>
+    </div>
+
+    <div class="menu-list">
+      <button type="button" class="menu-item" onclick="navigateTo('settings')">
+        <span class="menu-item-left">
+          <span class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+          <span>My Profile &amp; Security</span>
+        </span>
+        <span class="muted-note">›</span>
+      </button>
+
+      <button type="button" class="menu-item" onclick="navigateTo('my-products')">
+        <span class="menu-item-left">
+          <span class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+          <span>My Products / Active Hires</span>
+        </span>
+        <span class="muted-note">›</span>
+      </button>
+
+      <button type="button" class="menu-item" onclick="openFilteredTransactions('deposit')">
+        <span class="menu-item-left">
+          <span class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg></span>
+          <span>Recharge History</span>
+        </span>
+        <span class="muted-note">›</span>
+      </button>
+
+      <button type="button" class="menu-item" onclick="openFilteredTransactions('withdrawal')">
+        <span class="menu-item-left">
+          <span class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg></span>
+          <span>Withdrawal History</span>
+        </span>
+        <span class="muted-note">›</span>
+      </button>
+
+      <button type="button" class="menu-item" onclick="openFilteredTransactions('all')">
+        <span class="menu-item-left">
+          <span class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span>
+          <span>All Financial Transactions</span>
+        </span>
+        <span class="muted-note">›</span>
+      </button>
+
+      <button type="button" class="menu-item" onclick="navigateTo('notifications')">
+        <span class="menu-item-left">
+          <span class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+          <span>Notifications</span>
+        </span>
+        <span id="mine-notif-badge" class="pill-badge pill-amber" style="display:none;">0 New</span>
+      </button>
+
+      <button type="button" class="menu-item" onclick="navigateTo('settings')">
+        <span class="menu-item-left">
+          <span class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+          <span>Settings</span>
+        </span>
+        <span class="muted-note">›</span>
+      </button>
+
+      <button type="button" class="menu-item" onclick="navigateTo('support')">
+        <span class="menu-item-left">
+          <span class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>Help &amp; Support</span>
+        </span>
+        <span class="muted-note">›</span>
+      </button>
+
+    </div>
+
+    <button type="button" class="btn btn-danger-soft btn-block" onclick="handleLogout()">Sign Out</button>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 10: RECHARGE
+  ========================================================== -->
+  <section id="screen-deposit" class="screen" aria-label="Recharge Funds">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button type="button" class="back-btn" onclick="goBack()" aria-label="Go Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <h1 class="screen-title">Recharge Funds</h1>
+      </div>
+    </div>
+
+    <div class="card-sage">
+      <div style="font-size:13px; font-weight:700; color:var(--sage-900); margin-bottom:6px;">Automatic Mobile Money Payment</div>
+      <div style="font-size:12px; color:var(--sage-900);">Enter your amount and the phone number that should receive the MTN or Airtel payment prompt. Approve the prompt on your phone. Your balance is updated after payment confirmation.</div>
+    </div>
+
+    <div class="card">
+      <div id="deposit-alert" class="alert"></div>
+      <form id="deposit-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="dep-network">Mobile Money Network</label>
+          <select class="form-input" id="dep-network">
+            <option value="MTN Mobile Money">MTN Mobile Money</option>
+            <option value="Airtel Money">Airtel Money</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="dep-amount">Recharge Amount (UGX)</label>
+          <input class="form-input" id="dep-amount" type="number" min="5000" step="1000" placeholder="Minimum UGX 5,000" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="dep-payer-phone">Payer Phone Number (07XXXXXXXX)</label>
+          <input class="form-input" id="dep-payer-phone" type="tel" inputmode="numeric" maxlength="16" placeholder="07XXXXXXXX" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Send Mobile Money Prompt</button>
+      </form>
+    </div>
+
+    <div class="section-head">
+      <h2 class="section-title">Recent Recharge Requests</h2>
+    </div>
+    <div id="deposit-history-list"></div>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 11: WITHDRAW
+  ========================================================== -->
+  <section id="screen-withdraw" class="screen" aria-label="Withdraw Funds">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button type="button" class="back-btn" onclick="goBack()" aria-label="Go Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <h1 class="screen-title">Withdraw Earnings</h1>
+      </div>
+    </div>
+
+    <div class="card-hero" style="padding:16px;">
+      <div class="hero-label">Withdrawable Balance</div>
+      <div id="wit-available-bal" class="hero-amount">UGX 0</div>
+      <div class="muted-note" style="color:var(--sage-200); margin-top:4px;">No minimum withdrawal amount. Standard 5% processing tax applies to all withdrawals.</div>
+    </div>
+
+    <div class="card">
+      <div id="withdraw-alert" class="alert"></div>
+      <form id="withdraw-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="wit-amount">Withdrawal Amount (UGX)</label>
+          <input class="form-input" id="wit-amount" type="number" min="0" step="any" placeholder="Enter any amount (no minimum)" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="wit-phone">Destination Phone Number (07XXXXXXXX)</label>
+          <input class="form-input" id="wit-phone" type="tel" inputmode="numeric" maxlength="16" placeholder="07XXXXXXXX" required>
+        </div>
+
+        <div class="card-sage" style="padding:11px 12px; margin-bottom:14px;">
+          <div class="kv-row" style="padding:4px 0;">
+            <span class="kv-key">Requested Amount</span>
+            <span id="wit-calc-gross" class="kv-val">UGX 0</span>
+          </div>
+          <div class="kv-row" style="padding:4px 0;">
+            <span class="kv-key">Withdrawal Tax (5%)</span>
+            <span id="wit-calc-tax" class="kv-val" style="color:var(--danger);">- UGX 0</span>
+          </div>
+          <div class="kv-row" style="padding:6px 0 0 0;">
+            <span class="kv-key" style="font-weight:700; color:var(--sage-900);">Net Payout</span>
+            <span id="wit-calc-net" class="kv-val" style="font-size:15px; color:var(--success);">UGX 0</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Submit Withdrawal Request</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 12: TRANSACTIONS LEDGER
+  ========================================================== -->
+  <section id="screen-transactions" class="screen" aria-label="Transactions">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button type="button" class="back-btn" onclick="goBack()" aria-label="Go Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <h1 class="screen-title">Transactions</h1>
+      </div>
+    </div>
+
+    <div class="filter-bar" id="tx-filter-bar">
+      <button type="button" class="chip active" data-filter="all">All</button>
+      <button type="button" class="chip" data-filter="deposit">Recharges</button>
+      <button type="button" class="chip" data-filter="purchase">Purchases</button>
+      <button type="button" class="chip" data-filter="earning">Earnings</button>
+      <button type="button" class="chip" data-filter="withdrawal">Withdrawals</button>
+      <button type="button" class="chip" data-filter="referral">Referral</button>
+    </div>
+
+    <div id="transactions-list"></div>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 13: NOTIFICATIONS
+  ========================================================== -->
+  <section id="screen-notifications" class="screen" aria-label="Notifications">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button type="button" class="back-btn" onclick="goBack()" aria-label="Go Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <h1 class="screen-title">Notifications</h1>
+      </div>
+      <button type="button" class="btn btn-soft btn-sm" onclick="markAllNotificationsRead()">Mark All Read</button>
+    </div>
+
+    <div id="notifications-list"></div>
+  </section>
+
+  <!-- =========================================================
+       SCREEN 14: SETTINGS & PROFILE DETAILS
+  ========================================================== -->
+  <section id="screen-settings" class="screen" aria-label="Settings">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button type="button" class="back-btn" onclick="goBack()" aria-label="Go Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <h1 class="screen-title">Profile &amp; Settings</h1>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:13px; font-weight:700; color:var(--sage-900); margin-bottom:8px;">Account Information</div>
+      <div class="kv-row">
+        <span class="kv-key">Account Holder</span>
+        <span id="set-username" class="kv-val">—</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Registered Phone</span>
+        <span id="set-phone" class="kv-val">—</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Referral Code</span>
+        <span id="set-ref" class="kv-val">—</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- =========================================================
+       SCREEN 15: HELP & SUPPORT
+  ========================================================== -->
+  <section id="screen-support" class="screen" aria-label="Help and Support">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button type="button" class="back-btn" onclick="goBack()" aria-label="Go Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <h1 class="screen-title">Help &amp; Support</h1>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:14px; font-weight:700; color:var(--sage-900); margin-bottom:6px;">How CAPITALLOOP Works</div>
+      <p class="muted-note" style="margin-bottom:10px;">1. <strong>Recharge:</strong> Submit a mobile money recharge request. Once approved, funds enter your Available Recharge Balance.</p>
+      <p class="muted-note" style="margin-bottom:10px;">2. <strong>Buy &amp; Hire:</strong> Select any confirmed package and choose a 12-hour or 24-hour hiring cycle.</p>
+      <p class="muted-note" style="margin-bottom:10px;">3. <strong>Complete &amp; Receive:</strong> When the active hiring period ends, the agreed return is credited to your Withdrawable Balance.</p>
+      <p class="muted-note">4. <strong>Withdraw:</strong> Request payouts of any amount from your Withdrawable Balance (5% withdrawal tax applies).</p>
+    </div>
+
+    <div class="card">
+      <div style="font-size:14px; font-weight:700; color:var(--sage-900); margin-bottom:8px;">Support Channels</div>
+      <div class="kv-row">
+        <span class="kv-key">Support Desk</span>
+        <span class="kv-val">0770 104 920</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Operating Hours</span>
+        <span class="kv-val">Mon – Sun, 08:00 – 21:00 EAT</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       FIXED BOTTOM NAVIGATION (4 MAIN TABS)
+  ========================================================== -->
+  <nav id="bottom-nav" class="bottom-nav" aria-label="Primary Navigation">
+    <button type="button" class="nav-btn active" data-nav="home" onclick="navigateTo('home')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>HOME</span>
+    </button>
+    <button type="button" class="nav-btn" data-nav="products" onclick="navigateTo('products')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      <span>PRODUCTS</span>
+    </button>
+    <button type="button" class="nav-btn" data-nav="network" onclick="navigateTo('network')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>NETWORK</span>
+    </button>
+    <button type="button" class="nav-btn" data-nav="mine" onclick="navigateTo('mine')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>MINE</span>
+    </button>
+  </nav>
+</div>
+
+<script>
+/* ==========================================================================
+   CAPITALLOOP — CUSTOMER WEBSITE INTERACTIONS
+   ========================================================================== */
+
+const CAPITALLOOP_LOGO = `<svg viewBox="0 0 48 48" width="100%" height="100%" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="cl-glow" cx="50%" cy="42%" r="55%"><stop offset="0%" stop-color="#3c6a4a" stop-opacity=".55"/><stop offset="100%" stop-color="#102319" stop-opacity="0"/></radialGradient><linearGradient id="cl-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f6e3b4"/><stop offset="55%" stop-color="#d7b674"/><stop offset="100%" stop-color="#b58d46"/></linearGradient></defs><circle cx="24" cy="24" r="19" fill="url(#cl-glow)"/><path d="M24 5 40.5 14.5v19L24 43 7.5 33.5v-19Z" fill="none" stroke="url(#cl-gold)" stroke-width="1.6" stroke-linejoin="round"/><path d="M24 8.2 37.7 16.1v15.8L24 39.8 10.3 31.9V16.1Z" fill="none" stroke="#d9bd83" stroke-opacity=".28" stroke-width="1" stroke-linejoin="round"/><path d="M24 6.5v3.2M24 38.3v3.2" stroke="url(#cl-gold)" stroke-width="1.4" stroke-linecap="round"/><path d="M30.2 17.8a8.8 8.8 0 1 0 0 12.4" fill="none" stroke="#fff8e9" stroke-width="2.7" stroke-linecap="round"/><path d="M21.4 24c0-2.2 1.8-3.8 4.2-3.8 2.2 0 4.1 1.2 5.6 3.8-1.5 2.6-3.4 3.8-5.6 3.8-2.4 0-4.2-1.6-4.2-3.8Z" fill="none" stroke="url(#cl-gold)" stroke-width="1.8" stroke-linejoin="round"/><circle cx="31.2" cy="24" r="1.35" fill="#fff8e9"/></svg>`;
+
+function renderPackageArtwork(pkg) {
+  const palettes = {
+    'pkg-1': ['#eef4ea', '#dce8d7', '#4a7050', '#2e5135', '#d7b674', '#a8823c', 'box'],
+    'pkg-2': ['#f2f4e8', '#e2ebd9', '#5a8057', '#355737', '#d8b778', '#a37f3e', 'basket'],
+    'pkg-3': ['#ebf3ef', '#d8e7e1', '#3b6a5b', '#23493e', '#d6b676', '#a47e3a', 'parcel'],
+    'pkg-4': ['#eef2e8', '#dde6d6', '#2e5c3e', '#1a3a26', '#cfa963', '#977234', 'chest'],
+    'pkg-5': ['#eaf1ef', '#d7e5e2', '#26534b', '#143630', '#dfc283', '#a6823f', 'star'],
+    'pkg-6': ['#f5f0e5', '#e9e0cc', '#7b6642', '#4f4027', '#d4b26f', '#9a7536', 'trunk'],
+    'pkg-7': ['#f6efe2', '#ece0c8', '#9b7b42', '#6a5125', '#f3daa2', '#b98f45', 'gem'],
+    'pkg-8': ['#edf3ea', '#dce8d9', '#386344', '#1e3c27', '#d8b776', '#9b7635', 'seal'],
+    'pkg-9': ['#f2efe4', '#e4decb', '#254a34', '#132a1c', '#e0c282', '#a37e39', 'crown']
+  };
+  const [bg1, bg2, main, deep, gold, goldDeep, shape] = palettes[pkg.id] || palettes['pkg-1'];
+  const uid = pkg.id;
+  let object = '';
+
+  if (shape === 'box') {
+    object = `
+      <circle cx="36" cy="28" r="18" fill="${gold}" opacity=".16"/>
+      <rect x="15" y="29" width="42" height="27" rx="4" fill="url(#m-${uid})"/>
+      <rect x="15" y="29" width="42" height="4.5" fill="${deep}" opacity=".28"/>
+      <rect x="12" y="22" width="48" height="8.5" rx="3" fill="url(#g-${uid})"/>
+      <rect x="32.5" y="22" width="7" height="34" fill="#fff8ea" opacity=".92"/>
+      <rect x="34.5" y="22" width="3" height="34" fill="${gold}" opacity=".45"/>
+      <path d="M36 22c-10.5 0-14-9.5-7.2-11.2 5-1.2 7.2 7.2 7.2 11.2 0-4 2.2-12.4 7.2-11.2C50 12.5 46.5 22 36 22Z" fill="none" stroke="url(#g-${uid})" stroke-width="3.2" stroke-linejoin="round"/>
+      <circle cx="36" cy="21.5" r="2.6" fill="#fff8ea" stroke="${goldDeep}" stroke-width="1"/>
+    `;
+  } else if (shape === 'basket') {
+    object = `
+      <path d="M21 28c0-13.5 30-13.5 30 0" fill="none" stroke="url(#g-${uid})" stroke-width="3.8" stroke-linecap="round"/>
+      <path d="M27 27c-3.5-6-10-6.5-11-1 3.5 2.5 8 2.5 11 1Z" fill="${main}" opacity=".85"/>
+      <path d="M44 27c3.5-6 9.5-6.5 10.5-1-3.2 2.5-7.5 2.5-10.5 1Z" fill="${main}" opacity=".75"/>
+      <circle cx="36" cy="23.5" r="4.2" fill="url(#g-${uid})"/>
+      <circle cx="36" cy="23.5" r="1.7" fill="#fff8ea"/>
+      <path d="M14 29h44l-5.5 25.5a3 3 0 0 1-2.9 2.3H22.4a3 3 0 0 1-2.9-2.3Z" fill="url(#m-${uid})"/>
+      <rect x="12.5" y="27" width="47" height="5" rx="2.5" fill="url(#g-${uid})"/>
+      <path d="M18 37h36M19.5 44.5h33M21 51.5h30" stroke="#fff8ea" stroke-opacity=".55" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M26 32v24.5M36 32v24.5M46 32v24.5" stroke="${deep}" stroke-opacity=".28" stroke-width="1.5"/>
+    `;
+  } else if (shape === 'parcel') {
+    object = `
+      <polygon points="36,12 57,22.5 36,33 15,22.5" fill="${gold}" opacity=".32"/>
+      <polygon points="36,12 57,22.5 36,33 15,22.5" fill="url(#g-${uid})" opacity=".24"/>
+      <polygon points="15,22.5 36,33 36,57 15,46.5" fill="url(#m-${uid})"/>
+      <polygon points="57,22.5 36,33 36,57 57,46.5" fill="${deep}"/>
+      <polygon points="36,12 57,22.5 36,33 15,22.5" fill="${main}" opacity=".82"/>
+      <polygon points="24.5,17.7 45.5,28.2 47.5,27.2 26.5,16.7" fill="#fff8ea" opacity=".9"/>
+      <polygon points="46.5,17.3 25.5,27.8 27.5,28.8 48.5,18.3" fill="url(#g-${uid})"/>
+      <polygon points="24.5,27.2 28.5,29.2 28.5,53.2 24.5,51.2" fill="url(#g-${uid})"/>
+      <polygon points="43.5,29.2 47.5,27.2 47.5,51.2 43.5,53.2" fill="#f6e3b4" opacity=".9"/>
+      <ellipse cx="36" cy="22.5" rx="3.8" ry="2.1" fill="#fff8ea" stroke="${goldDeep}" stroke-width="1"/>
+    `;
+  } else if (shape === 'chest') {
+    object = `
+      <path d="M14 28c0-8.2 6.4-12 22-12s22 3.8 22 12v25a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3Z" fill="url(#m-${uid})"/>
+      <path d="M14 28c0-8.2 6.4-12 22-12s22 3.8 22 12H14Z" fill="${deep}" opacity=".35"/>
+      <rect x="12.5" y="27.5" width="47" height="5.5" rx="2" fill="url(#g-${uid})"/>
+      <path d="M22.5 17.5v38.5M49.5 17.5v38.5" stroke="url(#g-${uid})" stroke-width="3.2"/>
+      <rect x="31" y="29.5" width="10" height="12" rx="2.5" fill="#f7ebd0" stroke="${goldDeep}" stroke-width="1.2"/>
+      <circle cx="36" cy="34.5" r="1.7" fill="${deep}"/>
+      <path d="M36 35.5v3" stroke="${deep}" stroke-width="1.5" stroke-linecap="round"/>
+    `;
+  } else if (shape === 'star') {
+    object = `
+      <circle cx="36" cy="35" r="21" fill="${gold}" opacity=".14"/>
+      <polygon points="36,11 42.6,25.2 58,27.2 46.7,37.8 49.6,53 36,45.6 22.4,53 25.3,37.8 14,27.2 29.4,25.2" fill="url(#m-${uid})" stroke="url(#g-${uid})" stroke-width="2.2" stroke-linejoin="round"/>
+      <polygon points="36,11 36,34 29.4,25.2" fill="#ffffff" opacity=".18"/>
+      <polygon points="36,34 58,27.2 46.7,37.8" fill="${deep}" opacity=".32"/>
+      <polygon points="36,34 49.6,53 36,45.6" fill="#000000" opacity=".16"/>
+      <polygon points="36,34 22.4,53 25.3,37.8" fill="#ffffff" opacity=".1"/>
+      <circle cx="36" cy="34" r="4.2" fill="url(#g-${uid})"/>
+      <path d="M16 16l1.5 3.5L21 21l-3.5 1.5L16 26l-1.5-3.5L11 21l3.5-1.5Z" fill="${gold}" opacity=".85"/>
+      <path d="M56 14l1 2.2 2.2 1-2.2 1-1 2.2-1-2.2-2.2-1 2.2-1Z" fill="${gold}" opacity=".75"/>
+    `;
+  } else if (shape === 'trunk') {
+    object = `
+      <path d="M29 19v-3.5a2.5 2.5 0 0 1 2.5-2.5h9a2.5 2.5 0 0 1 2.5 2.5V19" fill="none" stroke="${deep}" stroke-width="3" stroke-linecap="round"/>
+      <rect x="13" y="19" width="46" height="36" rx="5" fill="url(#m-${uid})" stroke="${deep}" stroke-width="1.2"/>
+      <path d="M14 31h44M14 43h44" stroke="#fff8ea" stroke-opacity=".35" stroke-width="1.4"/>
+      <rect x="20.5" y="19" width="5" height="36" fill="url(#g-${uid})"/>
+      <rect x="46.5" y="19" width="5" height="36" fill="url(#g-${uid})"/>
+      <rect x="19.5" y="34.5" width="7" height="5" rx="1.2" fill="#fbf1d9" stroke="${goldDeep}" stroke-width="1"/>
+      <rect x="45.5" y="34.5" width="7" height="5" rx="1.2" fill="#fbf1d9" stroke="${goldDeep}" stroke-width="1"/>
+      <path d="M13 24.5h5v-5.5h-1.5A3.5 3.5 0 0 0 13 22.5Zm46 0h-5v-5.5h1.5A3.5 3.5 0 0 1 59 22.5Z" fill="url(#g-${uid})"/>
+    `;
+  } else if (shape === 'gem') {
+    object = `
+      <polygon points="20,16 52,16 62,29 36,57 10,29" fill="url(#m-${uid})" stroke="url(#g-${uid})" stroke-width="2.2" stroke-linejoin="round"/>
+      <polygon points="20,16 52,16 46,29 26,29" fill="#fff8ea" opacity=".42"/>
+      <polygon points="10,29 26,29 36,57" fill="${deep}" opacity=".28"/>
+      <polygon points="62,29 46,29 36,57" fill="${deep}" opacity=".45"/>
+      <polygon points="26,29 46,29 36,57" fill="url(#g-${uid})" opacity=".48"/>
+      <path d="M10 29h52M20 16l6 13M52 16l-6 13" stroke="#fff8ea" stroke-opacity=".75" stroke-width="1.5"/>
+      <path d="M54 12l1.2 2.8 2.8 1.2-2.8 1.2L54 20l-1.2-2.8L50 16l2.8-1.2Z" fill="#fff8ea"/>
+    `;
+  } else if (shape === 'seal') {
+    object = `
+      <circle cx="36" cy="34.5" r="23.5" fill="none" stroke="url(#g-${uid})" stroke-width="2.2" stroke-dasharray="3.2 2.4"/>
+      <circle cx="36" cy="34.5" r="20.5" fill="url(#m-${uid})" stroke="url(#g-${uid})" stroke-width="2.5"/>
+      <circle cx="36" cy="34.5" r="15.5" fill="none" stroke="#fff8ea" stroke-opacity=".55" stroke-width="1.2"/>
+      <path d="m36 22 3.8 7.8 8.6 1.2-6.2 6 1.5 8.5-7.7-4-7.7 4 1.5-8.5-6.2-6 8.6-1.2Z" fill="url(#g-${uid})" stroke="#fff8ea" stroke-opacity=".65" stroke-width="1" stroke-linejoin="round"/>
+    `;
+  } else if (shape === 'crown') {
+    object = `
+      <path d="M13 24.5 22.5 34.5 36 15.5 49.5 34.5 59 24.5 53.5 52.5H18.5Z" fill="url(#m-${uid})" stroke="url(#g-${uid})" stroke-width="2.3" stroke-linejoin="round"/>
+      <path d="M36 15.5 29.5 34.5 36 45 42.5 34.5Z" fill="#fff8ea" opacity=".16"/>
+      <rect x="18" y="46.5" width="36" height="6" rx="2" fill="url(#g-${uid})"/>
+      <circle cx="13" cy="23.5" r="2.6" fill="#fff8ea" stroke="${goldDeep}" stroke-width="1"/>
+      <circle cx="36" cy="14" r="3" fill="#fff8ea" stroke="${goldDeep}" stroke-width="1"/>
+      <circle cx="59" cy="23.5" r="2.6" fill="#fff8ea" stroke="${goldDeep}" stroke-width="1"/>
+      <circle cx="36" cy="37" r="2.6" fill="url(#g-${uid})"/>
+    `;
+  }
+
+  return `<svg class="product-art" viewBox="0 0 72 72" role="img" aria-label="${pkg.name} product illustration" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bg-${uid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${bg1}"/><stop offset="100%" stop-color="${bg2}"/></linearGradient><linearGradient id="m-${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${main}"/><stop offset="100%" stop-color="${deep}"/></linearGradient><linearGradient id="g-${uid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f7e7bf"/><stop offset="55%" stop-color="${gold}"/><stop offset="100%" stop-color="${goldDeep}"/></linearGradient></defs><rect width="72" height="72" rx="13" fill="url(#bg-${uid})"/><circle cx="57" cy="14" r="10" fill="${gold}" opacity=".16"/><circle cx="14" cy="57" r="12" fill="${main}" opacity=".09"/><ellipse cx="36" cy="60.5" rx="20" ry="3" fill="${deep}" opacity=".16"/>${object}</svg>`;
+}
+
+// Financial state is loaded from Appwrite; browser storage is not used.
+
+const PRODUCT_IMAGES = {"pkg-1": "data:image/webp;base64,UklGRoIFAABXRUJQVlA4IHYFAACwIQCdASrIAMgAPm02mUkkIyKiIpJ4yIANiWlu9Iv/4c+K/77pqd18PblcgCLZmiBHAHSq5DKox4P/rXtlbruCufzpC7ccU3Ak+f4YfTLzGNUj/vXri99p9UIDsNak5O6Gz/acndoNuj/sys6ozlR6caH3Ba86zg6WJ3D57+FhDQqHeyUDH8jeUM0fw6aICY++oaLADDg8UfFqPRlc3bu2RzicqPvYiXYnMz1ac2Pla8UKqCagkaYIBdSiUN74EORdFQmLawubig2GYGJqYIbWrGs1pMacY6VwfPGwYTV/qQS2Cf4hmJGLo1fDcWKUSwXiwqhvesSJsJDiTFkQYD8uqG2ipKcDwQ9HENvDWpRUEQWSOWkgAAD++16MKEIyWn6EmcU4ugENQagWQf8y+VRs/G/SsbBE5P0v4XeNHofT7Azv+WM1XOSAQuxd5IKaZwvhVUpJK0HMJU431w54h6AEOebgB5w970moOXwqrNyeJvRWdOKcq8i/Y/vkUH/JM836GsjQGjBnI8Y+Tx7ovzGum8qSnI/WRSO0ykveyky2FRvw+SlPyT+HU+/A2Dl00gE5y7lsbIKN2eyJSFr5k2qRvumPqOwxae7dYsJKp1uLDzqR6LtR/jm8stDb8Y6ogw/DypFbcXQqiXx8WJ+blKaw5E0f4D27Ce53kTsimnWn4YEplwGMgH1sN0vfgfEZZPIU9GcU7QIRTUX7VU21TX21q5odKP7sLuptBPHCG6W4EB9k5xWVJwjUk3XL2RU4/0m6QRjvgycOdHzz2IY/09Hb9647mCxWXMdWC11dA1wpI9fRBb67n3/5QEmvqgbk9tWXkXvVZJvNS+881L5i1fxdmKA02xbWgXYR+UhYxt4MnOt+WPM+FMk2nNs8uoIXV6RgV9CbKvPAin9m/Ajeb/8CRI5ZPIQPIq14CTYd1eEo6yLmrrjpN1azVWP+0ND8RtZk85Xm9gXNjj65DCuE/GwxG1PlO/3WCnQWVQY3Ranm/T+CGmLw72lUVxDa2YI385/bx/IJvqBgQIgG4PaCd34hf4yjbaRUFX8wkjRNDe8dHMg6jz7C8nF+Axs8AzC5C6/D3RYgmZh/D7EJHwrB5gkt6T0ub8fqIngkQTXwEu1v03llfh8foCCNE55MwN2pUec908zHBpB4I4X+k/JaX/mf+PW/idkEKiUzE+UZsJ6UmStYDsaFWXxv1Ir4uTVERr0eU6PIawWz+ui5WF89HXUhRPf/BcmOdIoGT+Qv3/xYikiuv+LY9o2sDp1c5h9jaZsT5aWvngfY7UAwm+Bv6iVMg/ZsVwio/URxn9d4wVhA27BqoEBpdJGOXXR30+g/+CYoeHS5d15iC0SCEXLDhZUvzMVFGDK8tfyrTJNkxM1zp2BMdUJmwGPun/P/E2pUPHRg7D7EyIh1Wou4ELvdiZJ2RkBFXUe3ne+jSDQmYwj8BX58x6sPYbdmfutNGP/gT9U/wJ32B/d7IOjhowCLL9PeklEvlpzNbkUcontAiOZR6tqPa0etNuKgsuliv7GEMS6ClinDa94FokfcoBIIDLLZQj1YxPd/ngFx7JeTpKUVd4IxI9Jic9A7bgLhEHHDsLLn7ZJCoAlzrchYEq4iNKJgzVRKQuPT5BRKr3XEINK6A1/IjCGtFWaPn4iRR1UUCXrfrqf1N+dxvY2IbkrNbOvaLr1dOAfKsNVpd/8dQ/3t17YKhYSqfj849DuO/DDKXWcP58Tufj56XlWBdHLyE7rVmdjb/xIipPdau/90ZLLo6UvUsuejWWqegi2viZ73CX50EN4jvxikvNNuHsQ4AH8NKHmnKezvRXUJ2INHgUkZ7Qc2lNjokQVEoYKdeH+zIHhbyhAAAAA=", "pkg-2": "data:image/webp;base64,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", "pkg-3": "data:image/webp;base64,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", "pkg-4": "data:image/webp;base64,UklGRpAFAABXRUJQVlA4IIQFAAAwJACdASrIAMgAPm02l0gkJiehJTXpsPANiWVuul/DIym2VdZH9lxHpzodO3+8yPm0njXM2CV8egyFDUDa/kn5aQl2UV3fkkqqQs9lObB9e3/06Xr9pykj3Y+6RcT1zhAldnczW6flrmniLpWLmxL48Ik+AKXbFjSbgGqc4YLM21hMzQ0+Cat5OLyEIWJC86u8wq87zhkvUsyz8+e3EdtLa/zSxiIK5zjoNQM8D2jBLjCKisRUOyqNtnEiYuX/YC01Bvw2buVKxZjd5kuxHn2GVRuEJXlV+iKbHvDWTWc77+GTfQlZeSJnFBi//m0jz+R0NlR2F/L68dL9VT7gfmGHXh1R9fEPt+Q+80l9GBMN9E1g1Ju1DxAT9Xm1kCu3XqzvnNp+XIUEyB8AAP77+5IXBsvtbtX/ldFRqaxkP0kPXt5/ZHxuZYnZ9InXJcV1FBZhhi1rk8JeIkMBC7HX+KGtbxax9lk4UQYE+vz75yWU0kuUwM+5EqFfOR/4dMOlX6nerSj0+mcqD/NwR9kKuYflbXc5L72ef+Sn1yWokjDTiOKYXevDd9rRK5P9o2OJjDDUbUoeB6cB+NwtPsNAmktHWvz7qSsRkxLOwsG3/RbxN6NvQt6QetCnGplwK2jNqjfo3OzAxmSTiknEmV46Gmnn/gf5Xc5boF26WUv9czKnl554eyz60LXtHnRKTHWVg7Gn9ERg3OY7CeHDiua54syYxUOTwJM5i3JtKwiXNtJ1nodpQh4tqSi4d1A+z2LBIv8WtnJKjA5rSHjnLixjzMnsG4R6F3TTDRGa4kcNFExbhggSY+iy/I/c2FgR9NA2+D9MlYBBlEIWKSIPuaQ/qP+FaKwbxbb/dggvwBjXY86ClV1T0D9Q8YLNcyfrb33HC4trL4YtTl/MTCt/7v0zuBi102Oyhkl17tSzzG6QLi74ZSOmzBl0DlfWypSK4u2CNaBNV1J0c1ugbWHb1muIeIoFajvpJz3BB9o6QcgkVjQbytelX/s1lkq/I6RGQ8MIE/uEcW6R3bok3teS7Td9emtrz0ttsM4PSQVW1FujGWNGpYHoDqGTvB9lD6C3KdnXtdbGM4xCWeLkKAdpDHlaFiAF54L49v41J9p2CC3npZlu5do9NS1emG4cUxV9aBx9Oteyi4TRhhbhQuioREHCT2rT+OkEULPf+v1L/ZOj+VGqSEMpMippL0ZVQUrIxsdqxAV11xU+B95xy0XxLD+tZtIkJDYtqJRvDwea+ePfy0AS2OaqVosVrtHGBeFB32EPN1SnYJAzEVR4MQt4Umv/6UUN7VKfd5CwpHikbABMQH5ouo5K67cEWPXWQ/VweQ/Z4iu9xF+bEEBir9b/LRkPir5/Wgpz0fDq2xiD4eBe7gQW9zvC/4GCo4wt627BP1HRps14ISpRyZanJtfQTECK6cuUM7pdi5HOCRa4VdIt4ZvxwF1rUhIjix27gASBRE2USIuVTiOin/4i1u6aQPPycxqjMZ6JI/rpPrzwfJqeigYFwZkhkprOE3PcW9P9ODq4CRhetOgvl+wz+1ZnqKnWe4rufk+rAUzvvUbudgopCLk6iwmyKeTy8dJxmsSY/iP8gidTyAKITwMPc+GnS3UDg4SrOh4J+JvlhYBLEU8VFz6u4xFDrgQMLXOnIDm6hHsFB2moTEW7xchUUVzJW4ni9OPq5l9YeVKLi9j6wo8Ss4L8SADcSDLxjvGv9fvmgOJLL3mSbKOTV5mS9UTrUytrL8Sfaxnvib5JTfUusxfDwKPyA+2ujB3iTR3PakLmdY18AD9xeUzInuMbGBmgIKTSGcymEgLC90xkAQI2jrsC7F8R6rycp0A+AP2xesI3kcJOPAVR5QPn8f4I5FyNl+BBCRDz6AAAAA==", "pkg-5": "data:image/webp;base64,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", "pkg-6": "data:image/webp;base64,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", "pkg-7": "data:image/webp;base64,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", "pkg-8": "data:image/webp;base64,UklGRtgEAABXRUJQVlA4IMwEAADQJwCdASrIAMgAPm00mEgkIyKjpHN6IIANiWluumAXBIkm+ZMOUO7REbIReqbPsA9QXWBVO84AbCFXwvt8ACCwZ8bkj2YXZzDUbwutvAhZnRhsBozRRr1bQ5LpRPrVVlGagedsLGdZ5L9DfYXPPBK1nYs2NTvrVWlZNchqlv9IPz7iZcDP8rf9ISlibqbGo+TESBZnA5ws66phtFUFv7LQcPpAx+BEWMNhb8V8zor8nOqAdlwayjN/ixs9cNQTnHUUqIjWk/ZR7Oztutorqd5V4Ofe/kKYRGDe2yqN+E6PriCexQEGbAPFAVe90OME+tX04bIoSZKooYzjlWJ+39ei+VzMyN5VZczzkG7KATD9LhcvABELLX3iH6CfCT1OS/YPX/zrYYQ1M1+DnKNqFS7dKjFARyIuMz5x1H9jUU/6fBW6kYGQQsAA/vv2BAqYjZwKUiyCO0nCgGMdqZyuJiWSkQcimFiI/XnTREG/NNlgMn+CgCF32W8/4X7IczoxmBau2O1zlVNoMnzkpEEec2aRwPP0T/U/oReioe+BSbWWFfYeF9P4UdV1nipfpe+4TmYPs0lfyxBwlXrMDOchyU+H7HP/AZHLzGE2ye/5RPlU5b6C3vxpp7kpS8unfMyLym+VSRAUUZSrG4EBcQ9bbGdm2D2iALXJT5EtXPB7/GPsgxtjdUWtNGjyqmdBvCj7rkfWJ3D1eAqJZgkcIOIehvy1rmhnynKx/D7ffg607qjsUYcff+wM/4b+UVXdXD7cJNxbDnOuTYbErBHXxUIiz0213Ls20lwn5/6/yhWDy1vjg7wnevx7d9bQhdMMT1DtVVQf3dXJKhBTIFJYXF6VmJsZJ7878eh/ueyYX0AtDUzKSKz/MsHGgyh0nesk6WFA+CMIcOWAu+xn+UNSEo36O219g029Sx0L/Og1AtiSLyiaRvKrJgP3x4RiItzppPyTA9ZpIqweMPOIHxopdCTsSaLRejAm3gQ07wx89V/xrry/1xWyV49rpOzDmoglHk92feQnBPkfztW57q93kF95FJhSzLXyMVm7u1GSmDXVbpg4upgUPCJJF9sO63bnrI9QTOIKvM2swYfZ0iVdERYkGn3JrVmg+0h3Et153EMEgumlTesvhAPP//xUdemBhxz7QYsK8hZ8nTJcJQmWsSb1w85RiZBeL/bVWlJ1l+sLazSB+PklgQc2fs7iieCB8saKF6k+kxXYJJdLWTAUTfEuPpYvGvA4kMwZVI0zqoG1R1UQAcaT1cicd/d89HK6FklA1NBwSig3j7Z+ZjJBN4Wy9U5FCdioe6mCKGgWQI48V9lBBMVwFuo4fuqJRBvH/A9+oQZ5i9tv6H2XB+UlIjjWK7fGduEFNFf2iPNVhocis6XXLZj/F2XxE4Sbggjs7MOdBCaMVHv74rykmfj61qO6umPxyUX27M8Nap+xZk9Db6x0OXXtP46Sge9o8UODBWUIpxNY8rIK42hyDg68qd2tGa6pOigrAdyphF5RNOC/lDEIgGVcO37CB4MpioGnFOfDfSwo1UdeI0cv848oYT9LWvBvL1vjGvq08OjKhyNl+hTOfeSLoNe5hMJtsL7crW39HEXMLmkFhtfi2ifroF08xbgWtiAZwGsCsAkAAAAA", "pkg-9": "data:image/webp;base64,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"};
+const PACKAGES = [
+  {
+    id: 'pkg-1',
+    name: 'JBL Portable Bluetooth Speaker',
+    price: 5000,
+    return12: 10000,
+    return24: 15000,
+    available: true,
+    accent: '#4A7050',
+    image: PRODUCT_IMAGES['pkg-1']
+  },
+  {
+    id: 'pkg-2',
+    name: 'Electric Standing Fan',
+    price: 10000,
+    return12: 18000,
+    return24: 25000,
+    available: true,
+    accent: '#5B8260',
+    image: PRODUCT_IMAGES['pkg-2']
+  },
+  {
+    id: 'pkg-3',
+    name: 'Smart Wristwatch',
+    price: 20000,
+    return12: 32000,
+    return24: 40000,
+    available: true,
+    accent: '#3E6B5C',
+    image: PRODUCT_IMAGES['pkg-3']
+  },
+  {
+    id: 'pkg-4',
+    name: 'Digital Smart Tablet',
+    price: 30000,
+    return12: 45000,
+    return24: 60000,
+    available: true,
+    accent: '#2D5A3C',
+    image: PRODUCT_IMAGES['pkg-4']
+  },
+  {
+    id: 'pkg-5',
+    name: 'Countertop Microwave Oven',
+    price: 50000,
+    return12: 70000,
+    return24: 90000,
+    available: true,
+    accent: '#244F47',
+    image: PRODUCT_IMAGES['pkg-5']
+  },
+  {
+    id: 'pkg-6',
+    name: '4K Smart Television',
+    price: 150000,
+    return12: 200000,
+    return24: 250000,
+    available: true,
+    accent: '#9B7B42',
+    image: PRODUCT_IMAGES['pkg-6']
+  },
+  {
+    id: 'pkg-7',
+    name: 'Ultrabook Laptop',
+    price: 300000,
+    return12: 360000,
+    return24: 450000,
+    available: true,
+    accent: '#C9A96E',
+    image: PRODUCT_IMAGES['pkg-7']
+  },
+  {
+    id: 'pkg-8',
+    name: 'Double-Door Refrigerator',
+    price: 500000,
+    return12: 620000,
+    return24: 700000,
+    available: true,
+    accent: '#7A9E7E',
+    image: PRODUCT_IMAGES['pkg-8']
+  },
+  {
+    id: 'pkg-9',
+    name: 'Front-Load Washing Machine',
+    price: 1000000,
+    return12: 1250000,
+    return24: 1500000,
+    available: true,
+    accent: '#7A9E7E',
+    image: PRODUCT_IMAGES['pkg-9']
+  }
+];
+
+function getPackageById(pkgId) {
+  return PACKAGES.find(p => p.id === pkgId) || PACKAGES[0];
+}
+
+function escapeHtml(val) {
+  return String(val ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function renderPackageMedia(pkg, styleClass = '') {
+  if (pkg && pkg.image) {
+    const safeName = escapeHtml(pkg.name || 'Package');
+    const safeId = escapeHtml(pkg.id || 'pkg-1');
+    return `<img src="${pkg.image}" alt="${safeName}" class="${styleClass}" loading="lazy" onerror="var d=document.createElement('div');d.style.cssText='width:100%;height:100%';d.innerHTML=renderPackageArtwork({id:'${safeId}',name:'${safeName.replace(/'/g, '')}'});this.parentNode.replaceChild(d,this);">`;
+  }
+  return renderPackageArtwork(pkg);
+}
+
+/* ==========================================================================
+   AUTHORITATIVE IN-MEMORY STATE (NO FINANCIAL LOCALSTORAGE)
+   ========================================================================== */
+function createDefaultState() {
+  return {
+    users: [],
+    currentUserPhone: null,
+    selectedPackageId: 'pkg-1',
+    selectedDuration: 12,
+    txFilter: 'all',
+    accountData: {}
+  };
+}
+
+let state = createDefaultState();
+let navHistory = [];
+let liveUser = null;
+let liveAccount = null;
+let liveSettings = {};
+
+function getCurrentUser() {
+  return liveUser;
+}
+
+function getCurrentAccount() {
+  return liveAccount;
+}
+
+function saveState() {
+  /* Financial state is owned exclusively by Appwrite backend. */
+}
+
+/* ==========================================================================
+   FORMATTING & PHONE NORMALIZATION HELPERS
+   ========================================================================== */
+function formatUGX(val) {
+  const num = Number(val) || 0;
+  return 'UGX ' + Math.round(num).toLocaleString('en-US');
+}
+
+function formatDateTime(ts) {
+  if (!ts) return '';
+  const d = new Date(ts);
+  if (Number.isNaN(d.getTime())) return String(ts);
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const day = String(d.getDate()).padStart(2, '0');
+  const mon = months[d.getMonth()];
+  const yr = d.getFullYear();
+  const hrs = String(d.getHours()).padStart(2, '0');
+  const mins = String(d.getMinutes()).padStart(2, '0');
+  return `${day} ${mon} ${yr}, ${hrs}:${mins}`;
+}
+
+function formatRemaining(ms) {
+  if (ms <= 0) return '00h 00m 00s';
+  const totalSec = Math.floor(ms / 1000);
+  const h = Math.floor(totalSec / 3600);
+  const m = Math.floor((totalSec % 3600) / 60);
+  const s = totalSec % 60;
+  return `${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
+}
+
+function normalizeUgandanPhone(input) {
+  const cleaned = String(input || '').replace(/[\s\-()]/g, '');
+  if (/^07\d{8}$/.test(cleaned)) return cleaned;
+  if (/^\+2567\d{8}$/.test(cleaned)) return '0' + cleaned.slice(4);
+  if (/^2567\d{8}$/.test(cleaned)) return '0' + cleaned.slice(3);
+  return '';
+}
+
+function isValidUgandanPhone(phone) {
+  return Boolean(normalizeUgandanPhone(phone));
+}
+
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+function copyText(elementId, message) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const text = el.textContent.trim();
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => showToast(message)).catch(() => fallbackCopy(text, message));
+  } else {
+    fallbackCopy(text, message);
+  }
+}
+
+function fallbackCopy(text, message) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+  showToast(message);
+}
+
+/* ==========================================================================
+   CUSTOMER-FRIENDLY ERROR TRANSLATOR (NO RAW BACKEND/SDK ERRORS)
+   ========================================================================== */
+function toCustomerErrorMessage(
+  rawMessage,
+  code = '',
+  fallback = 'We could not complete your request right now. Please try again.',
+  opts = {}
+) {
+  const c = String(code || '').toUpperCase();
+  const msg = String(rawMessage || '');
+  const lower = msg.toLowerCase();
+  const allowAuthPrompt = opts.allowAuthPrompt !== false;
+  const action = String(opts.action || '');
+
+  if (c === 'PHONE_ALREADY_REGISTERED') {
+    return 'An account with this phone number already exists. Please sign in instead.';
+  }
+  if (c === 'INVALID_CREDENTIALS') {
+    return 'Incorrect phone number or password. Please check your details and try again.';
+  }
+  if (c === 'INVALID_REFERRAL_CODE') {
+    return 'The referral code you entered was not found. Check it or leave it blank.';
+  }
+  if (!allowAuthPrompt && (c === 'AUTH_SESSION_INVALID' || c === 'AUTH_TOKEN_MISSING' || c === 'AUTH_USER_MISMATCH' || /authentication token was not received|please sign in again/i.test(lower))) {
+    if (action === 'diagnostics.health') {
+      return 'Live Appwrite Function rejected a public health check (HTTP 401). Deploy the updated index.js backend.';
+    }
+    return 'Account sign-in and registration are temporarily updating on the server. Please try again shortly.';
+  }
+  if (c === 'AUTH_SESSION_INVALID' || c === 'AUTH_TOKEN_MISSING' || c === 'AUTH_USER_MISMATCH') {
+    return 'Your session expired. Please sign in again.';
+  }
+  if (c === 'PACKAGE_ALREADY_ACTIVE') {
+    return 'You already have an active hire for this package. Wait for it to complete or select another package.';
+  }
+  if (c === 'INSUFFICIENT_RECHARGE_BALANCE' || c === 'INSUFFICIENT_WITHDRAWABLE_BALANCE') {
+    return msg || fallback;
+  }
+  if (c === 'TOO_MANY_LOGIN_ATTEMPTS' || c === 'RATE_LIMITED') {
+    return 'Too many attempts in a short time. Please wait a moment and try again.';
+  }
+  if (c === 'DUPLICATE_DEPOSIT_REF') {
+    return 'This payment request has already been received. Check your recharge history for its status.';
+  }
+  if (c === 'BACKEND_UNREACHABLE') {
+    return 'Temporary network issue connecting to account services. Please try again.';
+  }
+  if (c === 'SERVER_API_KEY_MISSING' || c === 'SERVER_SCOPE_CONFIG_ERROR' || c === 'SERVER_SCHEMA_ERROR' || c === 'INTERNAL_SERVICE_ERROR') {
+    return 'The service is temporarily unavailable. Please try again in a few moments.';
+  }
+
+  // Never allow raw technical/Appwrite internals in customer alerts
+  if (
+    !msg ||
+    /appwrite|missing scope|guests|role:|collection_|table_not_found|database_not_found|user_already_exists|user_email|user_session|creation of a session|session is active|authentication token was not received|unauthorized|http\s*\d{3}|stack|exception|at\s+\w+\s*\(/i.test(lower)
+  ) {
+    return fallback;
+  }
+  return msg;
+}
+
+/* ==========================================================================
+   NAVIGATION & BROWSER HISTORY ROUTING
+   ========================================================================== */
+const MAIN_TABS = ['home', 'products', 'network', 'mine'];
+const AUTH_SCREENS = ['login', 'register'];
+
+function navigateTo(screenName, pushHistory = true) {
+  const user = getCurrentUser();
+  if (!user && !AUTH_SCREENS.includes(screenName)) {
+    screenName = 'login';
+  }
+  if (user && AUTH_SCREENS.includes(screenName)) {
+    screenName = 'home';
+  }
+
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('screen-' + screenName);
+  if (target) {
+    target.classList.add('active');
+  }
+
+  const bottomNav = document.getElementById('bottom-nav');
+  if (bottomNav) {
+    if (user && !AUTH_SCREENS.includes(screenName)) {
+      bottomNav.classList.add('visible');
+    } else {
+      bottomNav.classList.remove('visible');
+    }
+  }
+
+  const activeTab = MAIN_TABS.includes(screenName)
+    ? screenName
+    : (['product-details', 'purchase-confirmation', 'my-products'].includes(screenName) ? 'products' : 'mine');
+
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.nav === activeTab);
+  });
+
+  if (pushHistory) {
+    const current = navHistory[navHistory.length - 1];
+    if (current !== screenName) {
+      navHistory.push(screenName);
+      try {
+        history.pushState({ screen: screenName }, '', '#' + screenName);
+      } catch (_) {}
+    }
+  }
+
+  window.scrollTo(0, 0);
+  renderActiveScreen(screenName);
+}
+
+function goBack() {
+  if (navHistory.length > 1) {
+    navHistory.pop();
+    const prev = navHistory[navHistory.length - 1];
+    navigateTo(prev, false);
+  } else {
+    navigateTo(getCurrentUser() ? 'home' : 'login', false);
+  }
+}
+
+window.addEventListener('popstate', (event) => {
+  const screen = (event.state && event.state.screen) || location.hash.replace('#', '') || (getCurrentUser() ? 'home' : 'login');
+  navigateTo(screen, false);
+});
+
+/* ==========================================================================
+   SCREEN RENDERERS
+   ========================================================================== */
+function renderActiveScreen(forcedName) {
+  const activeEl = forcedName
+    ? document.getElementById('screen-' + forcedName)
+    : document.querySelector('.screen.active');
+  if (!activeEl) return;
+
+  const id = activeEl.id.replace('screen-', '');
+  if (id === 'home') renderHome();
+  else if (id === 'products') renderProducts();
+  else if (id === 'product-details') renderProductDetails();
+  else if (id === 'purchase-confirmation') renderPurchaseConfirmation();
+  else if (id === 'my-products') renderMyProducts();
+  else if (id === 'network') renderNetwork();
+  else if (id === 'mine') renderMine();
+  else if (id === 'deposit') renderDeposit();
+  else if (id === 'withdraw') renderWithdraw();
+  else if (id === 'transactions') renderTransactions();
+  else if (id === 'notifications') renderNotifications();
+  else if (id === 'settings') renderSettings();
+}
+
+function renderHome() {
+  const user = getCurrentUser();
+  const acct = getCurrentAccount();
+  if (!user || !acct) return;
+
+  document.getElementById('home-username').textContent = user.username || 'Member';
+  document.getElementById('home-deposit-balance').textContent = formatUGX(acct.depositBalance || 0);
+  document.getElementById('home-withdrawable-balance').textContent = formatUGX(acct.withdrawableBalance || 0);
+  document.getElementById('home-locked-balance').textContent = formatUGX(acct.lockedEarnings || 0);
+
+  const activeHires = (acct.hires || []).filter(h => h.status === 'working');
+  const completedHires = (acct.hires || []).filter(h => h.status === 'completed');
+
+  document.getElementById('home-active-count').textContent = activeHires.length;
+  document.getElementById('home-completed-count').textContent = `${completedHires.length} completed`;
+
+  const unreadCount = (acct.notifications || []).filter(n => !n.read).length;
+  document.getElementById('home-notif-dot').style.display = unreadCount > 0 ? 'block' : 'none';
+
+  const activePreviewEl = document.getElementById('home-active-preview');
+  if (!activeHires.length) {
+    let emptyHtml = `<div class="active-empty"><div class="active-empty-icon">◷</div><div><strong>No active hires running</strong><span>Start a 12h or 24h hire to track live countdowns here.</span></div><button type="button" onclick="navigateTo('products')">Browse →</button></div>`;
+    if (completedHires.length) {
+      const latest = completedHires[0];
+      const latestPkg = getPackageById(latest.packageId);
+      const latestName = escapeHtml(latestPkg ? latestPkg.name : latest.packageName);
+      emptyHtml += `<div class="completed-mini-row"><div><div class="completed-mini-title">${latestName} · COMPLETED</div><div class="expired-strike">${latest.durationHours}h Active · 00h 00m 00s</div></div><span class="pill-badge pill-muted">${latest.credited ? 'Credited ' + formatUGX(latest.expectedReturn) : 'Completed'}</span></div>`;
+    }
+    activePreviewEl.innerHTML = emptyHtml;
+  } else {
+    activePreviewEl.innerHTML = activeHires.slice(0, 3).map(h => {
+      const pkg = getPackageById(h.packageId);
+      const displayName = escapeHtml(pkg ? pkg.name : h.packageName);
+      const rem = Math.max(0, h.endTime - Date.now());
+      const total = Math.max(1, h.endTime - h.startTime);
+      const elapsed = Math.min(total, Math.max(0, Date.now() - h.startTime));
+      const pct = Math.min(100, Math.max(2, Math.round((elapsed / total) * 100)));
+      return `
+        <button type="button" class="active-tracker-card" onclick="navigateTo('my-products')">
+          <div class="active-tracker-top">
+            <div class="active-hire-thumb">${renderPackageMedia(pkg)}</div>
+            <div class="active-hire-main">
+              <div class="active-hire-name">${displayName}</div>
+              <div class="active-hire-amounts">Paid: ${formatUGX(h.amount)} · Return: <strong>${formatUGX(h.expectedReturn)}</strong></div>
+            </div>
+            <span class="active-status-tag">ACTIVE</span>
+          </div>
+          <div class="active-timer-row">
+            <span class="live-timer live-timer-box" data-end="${h.endTime}">${rem <= 0 ? 'Settling...' : formatRemaining(rem) + ' left'}</span>
+            <span class="live-pct-text" data-pct-start="${h.startTime}" data-pct-end="${h.endTime}">${pct}% elapsed</span>
+          </div>
+          <div class="active-progress"><i class="live-progress-bar" data-start="${h.startTime}" data-end="${h.endTime}" style="width:${pct}%"></i></div>
+        </button>`;
+    }).join('');
+    if (activeHires.length > 3) {
+      activePreviewEl.innerHTML += `<button class="active-more" type="button" onclick="navigateTo('my-products')">+${activeHires.length - 3} more active hires · View all</button>`;
+    }
+  }
+}
+
+function hasActiveHireForPackage(acct, packageId) {
+  return !!(acct && Array.isArray(acct.hires) && acct.hires.some(h =>
+    h.packageId === packageId && h.status === 'working'
+  ));
+}
+
+function renderProducts() {
+  const acct = getCurrentAccount();
+  if (acct) {
+    document.getElementById('prod-dep-bal').textContent = formatUGX(acct.depositBalance);
+  }
+
+  const listEl = document.getElementById('products-list');
+  listEl.innerHTML = PACKAGES.map(pkg => {
+    if (!pkg.available) {
+      return `
+        <div class="product-card unavailable">
+          <div class="product-thumb">${renderPackageMedia(pkg)}</div>
+          <div class="product-info">
+            <div class="product-name">${escapeHtml(pkg.name)}</div>
+            <div class="product-price">${formatUGX(pkg.price)}</div>
+            <span class="pill-badge pill-amber">Returns Awaiting Confirmation</span>
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" disabled>Unavailable</button>
+        </div>
+      `;
+    }
+
+    const alreadyActive = hasActiveHireForPackage(acct, pkg.id);
+    return `
+      <div class="product-card ${alreadyActive ? 'unavailable' : ''}" ${alreadyActive ? '' : `onclick="selectProduct('${pkg.id}')"`}>
+        <div class="product-thumb">${renderPackageMedia(pkg)}</div>
+        <div class="product-info">
+          <div class="product-name">${escapeHtml(pkg.name)}</div>
+          <div class="product-price">${formatUGX(pkg.price)}</div>
+          <div class="returns-strip">
+            <div class="ret-chip"><span>12h:</span> <strong>${formatUGX(pkg.return12)}</strong></div>
+            <div class="ret-chip"><span>24h:</span> <strong>${formatUGX(pkg.return24)}</strong></div>
+          </div>
+          <div class="status-line ${alreadyActive ? 'status-busy' : 'status-avail'}">
+            ${alreadyActive ? '● Active hire · wait for completion' : '● Available to hire'}
+          </div>
+        </div>
+        <button type="button" class="btn ${alreadyActive ? 'btn-outline' : 'btn-primary'} btn-sm" ${alreadyActive ? 'disabled' : `onclick="event.stopPropagation(); selectProduct('${pkg.id}')"`}>${alreadyActive ? 'Active' : 'Choose'}</button>
+      </div>
+    `;
+  }).join('');
+}
+
+function selectProduct(pkgId) {
+  const pkg = PACKAGES.find(p => p.id === pkgId && p.available);
+  if (!pkg) return;
+  if (hasActiveHireForPackage(getCurrentAccount(), pkg.id)) {
+    showToast('This package is already active. You can hire it again after it completes.');
+    renderProducts();
+    return;
+  }
+  state.selectedPackageId = pkg.id;
+  state.selectedDuration = 12;
+  navigateTo('product-details');
+}
+
+function setHireDuration(hours) {
+  state.selectedDuration = hours === 24 ? 24 : 12;
+  renderProductDetails();
+}
+
+function renderProductDetails() {
+  const acct = getCurrentAccount();
+  const pkg = PACKAGES.find(p => p.id === state.selectedPackageId && p.available) || PACKAGES[0];
+  const dur = state.selectedDuration === 24 ? 24 : 12;
+  const activeReturn = dur === 24 ? pkg.return24 : pkg.return12;
+  const alreadyActive = hasActiveHireForPackage(acct, pkg.id);
+  const canAfford = acct && acct.depositBalance >= pkg.price;
+
+  if (alreadyActive) {
+    document.getElementById('product-details-content').innerHTML = `
+      <div class="card">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+          <div class="product-thumb product-detail-art">${renderPackageMedia(pkg)}</div>
+          <div>
+            <span class="pill-badge pill-amber">Package already active</span>
+            <h3 style="margin:6px 0 2px;color:var(--sage-900);">${escapeHtml(pkg.name)}</h3>
+            <div class="muted-note">${formatUGX(pkg.price)}</div>
+          </div>
+        </div>
+        <p class="muted-note" style="margin-bottom:12px;">You can only have one active hire of this package at a time. You may still choose other packages. Once this hire is completed, you can purchase this package again.</p>
+        <button type="button" class="btn btn-primary btn-block" onclick="navigateTo('my-products')">View Active Hires</button>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('product-details-content').innerHTML = `
+    <div class="card" style="display:flex; align-items:center; gap:14px;">
+      <div class="product-thumb product-detail-art">${renderPackageMedia(pkg)}</div>
+      <div>
+        <span class="pill-badge pill-green" style="margin-bottom:4px;">Available to Hire</span>
+        <div style="font-size:17px; font-weight:700; color:var(--sage-900);">${escapeHtml(pkg.name)}</div>
+        <div class="cl-detail-purchase-price"><small>YOUR PURCHASE PRICE</small>${formatUGX(pkg.price)}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:13px; font-weight:700; color:var(--sage-900);">Select Hiring Duration</div>
+      <div class="muted-note">Choose how long this product works before maturing.</div>
+
+      <div class="duration-grid">
+        <button type="button" class="dur-option ${dur === 12 ? 'selected' : ''}" onclick="setHireDuration(12)">
+          <div class="dur-hours">12 Hours Cycle</div>
+          <div class="dur-return">${formatUGX(pkg.return12)}</div>
+          <div class="dur-gain">+${formatUGX(pkg.return12 - pkg.price)} net gain</div>
+        </button>
+
+        <button type="button" class="dur-option ${dur === 24 ? 'selected' : ''}" onclick="setHireDuration(24)">
+          <div class="dur-hours">24 Hours Cycle</div>
+          <div class="dur-return">${formatUGX(pkg.return24)}</div>
+          <div class="dur-gain">+${formatUGX(pkg.return24 - pkg.price)} net gain</div>
+        </button>
+      </div>
+
+      <div class="card-sage" style="margin-bottom:0;">
+        <div class="kv-row" style="padding:4px 0;">
+          <span class="kv-key">Selected Duration</span>
+          <span class="kv-val">${dur} Hours Working Period</span>
+        </div>
+        <div class="kv-row" style="padding:4px 0;">
+          <span class="kv-key">Agreed Maturity Return</span>
+          <span class="kv-val" style="color:var(--success); font-size:15px;">${formatUGX(activeReturn)}</span>
+        </div>
+        <div class="kv-row" style="padding:4px 0;">
+          <span class="kv-key">Available Recharge Balance</span>
+          <span class="kv-val">${formatUGX(acct ? acct.depositBalance : 0)}</span>
+        </div>
+      </div>
+    </div>
+
+    ${!canAfford ? `
+      <div class="alert alert-error show">
+        <span>Insufficient recharge balance (${formatUGX(acct ? acct.depositBalance : 0)}) for this ${formatUGX(pkg.price)} package. Please recharge funds first.</span>
+      </div>
+      <button type="button" class="btn btn-champagne btn-block" onclick="navigateTo('deposit')">Go to Recharge</button>
+    ` : `
+      <button type="button" class="btn btn-primary btn-block" onclick="navigateTo('purchase-confirmation')">Continue to Confirmation</button>
+    `}
+  `;
+}
+
+function renderPurchaseConfirmation(completedHire = null) {
+  const acct = getCurrentAccount();
+  const pkg = PACKAGES.find(p => p.id === state.selectedPackageId && p.available) || PACKAGES[0];
+  const dur = state.selectedDuration === 24 ? 24 : 12;
+  const expectedReturn = dur === 24 ? pkg.return24 : pkg.return12;
+  const container = document.getElementById('purchase-confirm-content');
+
+  if (!completedHire && hasActiveHireForPackage(acct, pkg.id)) {
+    container.innerHTML = `<div class="card"><span class="pill-badge pill-amber">Already active</span><p class="muted-note" style="margin:10px 0">This package cannot be purchased again until its current hire is completed. Other packages remain available.</p><button type="button" class="btn btn-primary btn-block" onclick="navigateTo('products')">Choose another package</button></div>`;
+    return;
+  }
+
+  if (completedHire) {
+    container.innerHTML = `
+      <div class="card" style="text-align:center; padding:22px 16px;">
+        <div style="width:52px; height:52px; border-radius:50%; background:var(--success-bg); color:var(--success); display:flex; align-items:center; justify-content:center; margin:0 auto 12px auto;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2 style="font-size:18px; color:var(--sage-900);">Hire Activated</h2>
+        <p class="muted-note" style="margin-top:4px;">Your hire request was accepted by the CAPITALLOOP backend.</p>
+
+        <div class="card-sage" style="text-align:left; margin-top:14px;">
+          <div class="kv-row"><span class="kv-key">Hire ID</span><span class="kv-val">${escapeHtml(completedHire.id)}</span></div>
+          <div class="kv-row"><span class="kv-key">Package</span><span class="kv-val">${escapeHtml(completedHire.packageName)}</span></div>
+          <div class="kv-row"><span class="kv-key">Duration</span><span class="kv-val">${completedHire.durationHours} Hours</span></div>
+          <div class="kv-row"><span class="kv-key">Start Time</span><span class="kv-val">${formatDateTime(completedHire.startTime)}</span></div>
+          <div class="kv-row"><span class="kv-key">Completion Time</span><span class="kv-val">${formatDateTime(completedHire.endTime)}</span></div>
+          <div class="kv-row"><span class="kv-key">Expected Return</span><span class="kv-val" style="color:var(--success);">${formatUGX(completedHire.expectedReturn)}</span></div>
+        </div>
+
+        <div class="grid-2" style="margin-top:14px;">
+          <button type="button" class="btn btn-primary" onclick="navigateTo('my-products')">View Active Hires</button>
+          <button type="button" class="btn btn-outline" onclick="navigateTo('home')">Back to Home</button>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  const remainingAfter = (acct ? acct.depositBalance : 0) - pkg.price;
+
+  container.innerHTML = `
+    <div class="card">
+      <div style="font-size:14px; font-weight:700; color:var(--sage-900); margin-bottom:10px;">Order &amp; Hire Summary</div>
+      <div class="kv-row">
+        <span class="kv-key">Selected Package</span>
+        <span class="kv-val">${escapeHtml(pkg.name)}</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Purchase Price</span>
+        <span class="kv-val">${formatUGX(pkg.price)}</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Hiring Duration</span>
+        <span class="kv-val">${dur} Hours</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Expected Return</span>
+        <span class="kv-val" style="color:var(--success);">${formatUGX(expectedReturn)}</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Current Recharge Balance</span>
+        <span class="kv-val">${formatUGX(acct ? acct.depositBalance : 0)}</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Balance After Purchase</span>
+        <span class="kv-val" style="color:${remainingAfter < 0 ? 'var(--danger)' : 'var(--sage-900)'};">${formatUGX(remainingAfter)}</span>
+      </div>
+    </div>
+
+    <div class="alert alert-info show" style="font-size:12px;">
+      <span>Confirming sends a secure hire request to CAPITALLOOP. The server validates your balance and starts the ${dur}-hour hire timer.</span>
+    </div>
+
+    <button type="button" id="confirm-hire-btn" class="btn btn-primary btn-block" ${remainingAfter < 0 ? 'disabled' : ''} onclick="executePurchaseHire()">Confirm &amp; Start Hire</button>
+  `;
+}
+
+function renderMyProducts() {
+  const acct = getCurrentAccount();
+  if (!acct) return;
+
+  const active = (acct.hires || []).filter(h => h.status === 'working');
+  const completed = (acct.hires || []).filter(h => h.status === 'completed');
+
+  document.getElementById('active-hires-badge').textContent = `${active.length} Active`;
+  document.getElementById('completed-hires-badge').textContent = `${completed.length} Completed`;
+
+  const activeEl = document.getElementById('active-hires-container');
+  if (active.length === 0) {
+    activeEl.innerHTML = `<div class="card" style="background:#EFF6FF; border-color:#BFDBFE;"><div class="muted-note" style="color:#1E3A8A;">No active working hires. Tap "+ New Hire" to select a package.</div></div>`;
+  } else {
+    activeEl.innerHTML = active.map(h => {
+      const pkg = getPackageById(h.packageId);
+      const displayName = escapeHtml(pkg ? pkg.name : h.packageName);
+      const now = Date.now();
+      const totalMs = Math.max(1, h.endTime - h.startTime);
+      const elapsedMs = Math.min(totalMs, Math.max(0, now - h.startTime));
+      const pct = Math.min(100, Math.max(2, Math.round((elapsedMs / totalMs) * 100)));
+      const rem = Math.max(0, h.endTime - now);
+
+      return `
+        <div class="card" style="background:linear-gradient(145deg,#F0F7FF 0%,#F8F7FF 100%); border:1.5px solid #BFDBFE;">
+          <div style="display:flex; align-items:center; gap:11px; margin-bottom:10px;">
+            <div class="active-hire-thumb" style="width:54px; height:54px;">${renderPackageMedia(pkg)}</div>
+            <div style="flex:1; min-width:0;">
+              <div style="font-size:14.5px; font-weight:700; color:#0F172A;">${displayName}</div>
+              <div class="muted-note" style="color:#475569;">Purchase: ${formatUGX(h.amount)} · ${h.durationHours}h Cycle</div>
+            </div>
+            <span class="active-status-tag">ACTIVE</span>
+          </div>
+
+          <div class="active-timer-row" style="margin-bottom:7px;">
+            <span class="live-timer live-timer-box" data-end="${h.endTime}">${rem <= 0 ? 'Settling...' : formatRemaining(rem) + ' left'}</span>
+            <span class="live-pct-text" data-pct-start="${h.startTime}" data-pct-end="${h.endTime}">${pct}% elapsed</span>
+          </div>
+
+          <div class="active-progress" style="height:7px; margin-bottom:9px;">
+            <i class="live-progress-bar" data-start="${h.startTime}" data-end="${h.endTime}" style="width:${pct}%;"></i>
+          </div>
+
+          <div class="kv-row" style="padding:4px 0; border-color:rgba(59,130,246,0.14);">
+            <span class="kv-key">Started</span>
+            <span class="kv-val">${formatDateTime(h.startTime)}</span>
+          </div>
+          <div class="kv-row" style="padding:4px 0; border-color:rgba(59,130,246,0.14);">
+            <span class="kv-key">Completion Time</span>
+            <span class="kv-val">${formatDateTime(h.endTime)}</span>
+          </div>
+          <div class="kv-row" style="padding:4px 0; border-bottom:none;">
+            <span class="kv-key">Expected Return</span>
+            <span class="kv-val" style="color:var(--success); font-weight:800;">${formatUGX(h.expectedReturn)}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  const compEl = document.getElementById('completed-hires-container');
+  if (completed.length === 0) {
+    compEl.innerHTML = `<div class="card"><div class="muted-note">No completed hires yet.</div></div>`;
+  } else {
+    compEl.innerHTML = completed.map(h => {
+      const pkg = getPackageById(h.packageId);
+      const displayName = escapeHtml(pkg ? pkg.name : h.packageName);
+      return `
+      <div class="card completed-hire-card">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="active-hire-thumb" style="width:46px; height:46px;">${renderPackageMedia(pkg)}</div>
+          <div style="flex:1; min-width:0;">
+            <div style="font-size:14px; font-weight:700; color:#334155;">${displayName} (${h.durationHours}h)</div>
+            <div class="expired-strike">${h.durationHours}h Active · 00h 00m 00s remaining</div>
+            <div class="muted-note">Completed: ${formatDateTime(h.endTime)}</div>
+          </div>
+          <span class="pill-badge pill-muted">COMPLETED</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-top:9px; padding-top:8px; border-top:1px solid #CBD5E1; font-size:12.5px;">
+          <span class="muted-note">Paid: ${formatUGX(h.amount)}</span>
+          <strong style="color:${h.credited ? 'var(--success)' : 'var(--warning)'};">${h.credited ? `Credited ${formatUGX(h.expectedReturn)} to Balance` : 'Awaiting Credit Confirmation'}</strong>
+        </div>
+      </div>
+    `;
+    }).join('');
+  }
+}
+
+function renderNetwork() {
+  const user = getCurrentUser();
+  const acct = getCurrentAccount();
+  if (!user || !acct) return;
+
+  document.getElementById('net-ref-code').textContent = user.referralCode || 'LOOP0000';
+  const baseUrl = location.protocol.startsWith('http')
+    ? `${location.origin}${location.pathname}`
+    : 'https://capitalloop.app/';
+  document.getElementById('net-ref-link').textContent = `${baseUrl}?ref=${encodeURIComponent(user.referralCode || '')}`;
+
+  const refs = acct.referrals || [];
+  const activeRefs = refs.filter(r => r.status === 'Active');
+  document.getElementById('net-team-size').textContent = `${refs.length} Members`;
+  document.getElementById('net-active-refs').textContent = `${activeRefs.length} Active`;
+  document.getElementById('net-team-collection').textContent = formatUGX(refs.reduce((s, r) => s + (Number(r.collection) || 0), 0));
+  document.getElementById('net-ref-rewards').textContent = formatUGX(Number(acct.totalReferralRewards || 0));
+
+  const pct = liveSettings.referralCommissionPercent;
+  const badgeEl = document.querySelector('#screen-network .pill-badge');
+  if (badgeEl) {
+    if (typeof pct === 'number' && pct > 0) {
+      badgeEl.className = 'pill-badge pill-green';
+      badgeEl.textContent = `${pct}% Commission Rate`;
+    } else {
+      badgeEl.className = 'pill-badge pill-amber';
+      badgeEl.textContent = 'Configured by Administrator';
+    }
+  }
+
+  const listEl = document.getElementById('network-list');
+  if (!refs.length) {
+    listEl.innerHTML = `<div class="card"><div class="muted-note">Share your referral link to invite members to your team.</div></div>`;
+  } else {
+    listEl.innerHTML = refs.map(r => `
+      <div class="list-row">
+        <div class="row-main">
+          <div class="row-title">${escapeHtml(r.name)} <span class="pill-badge ${r.status === 'Active' ? 'pill-green' : 'pill-muted'}" style="margin-left:4px;">${escapeHtml(r.status)}</span></div>
+          <div class="row-sub">${escapeHtml(r.phone)} · Joined ${escapeHtml(r.joined)}</div>
+        </div>
+        <div class="row-right">
+          <div class="row-amount">${formatUGX(r.collection)}</div>
+          <div class="row-sub">Collection</div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function renderMine() {
+  const user = getCurrentUser();
+  const acct = getCurrentAccount();
+  if (!user || !acct) return;
+
+  const initials = String(user.username || 'CL').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  document.getElementById('mine-avatar').textContent = initials || 'CL';
+  document.getElementById('mine-username').textContent = user.username || 'Member';
+  document.getElementById('mine-phone').textContent = user.phone || '07XXXXXXXX';
+  document.getElementById('mine-ref-id').textContent = user.referralCode || 'LOOP0000';
+
+  const unread = (acct.notifications || []).filter(n => !n.read).length;
+  const badge = document.getElementById('mine-notif-badge');
+  if (unread > 0) {
+    badge.style.display = 'inline-flex';
+    badge.textContent = `${unread} New`;
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function renderDeposit() {
+  const user = getCurrentUser();
+  const acct = getCurrentAccount();
+  if (!user || !acct) return;
+
+  const payerInput = document.getElementById('dep-payer-phone');
+  if (payerInput && !payerInput.value && user.phone) payerInput.value = user.phone;
+
+  const deposits = (acct.transactions || []).filter(t => t.type === 'deposit');
+  const listEl = document.getElementById('deposit-history-list');
+  if (!deposits.length) {
+    listEl.innerHTML = `<div class="card"><div class="muted-note">No recharge requests submitted yet.</div></div>`;
+  } else {
+    listEl.innerHTML = deposits.map(d => {
+      const badgeCls = d.status === 'Pending' ? 'pill-amber' : (d.status === 'Rejected' ? 'pill-muted' : 'pill-green');
+      return `
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">${escapeHtml(d.title)}</div>
+            <div class="row-sub">${escapeHtml(d.date)}</div>
+          </div>
+          <div class="row-right">
+            <div class="row-amount amt-pos">+${formatUGX(d.amount)}</div>
+            <span class="pill-badge ${badgeCls}">${escapeHtml(d.status)}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+}
+
+function renderWithdraw() {
+  const user = getCurrentUser();
+  const acct = getCurrentAccount();
+  if (!user || !acct) return;
+
+  document.getElementById('wit-available-bal').textContent = formatUGX(acct.withdrawableBalance);
+  const phoneInput = document.getElementById('wit-phone');
+  if (phoneInput && !phoneInput.value && user.phone) phoneInput.value = user.phone;
+  updateWithdrawCalc();
+}
+
+function updateWithdrawCalc() {
+  const amount = Math.max(0, Number(document.getElementById('wit-amount')?.value) || 0);
+  const tax = Math.round(amount * 0.05);
+  const net = Math.max(0, amount - tax);
+
+  document.getElementById('wit-calc-gross').textContent = formatUGX(amount);
+  document.getElementById('wit-calc-tax').textContent = `- ${formatUGX(tax)}`;
+  document.getElementById('wit-calc-net').textContent = formatUGX(net);
+}
+
+function openFilteredTransactions(filter) {
+  state.txFilter = filter || 'all';
+  navigateTo('transactions');
+}
+
+function renderTransactions() {
+  const acct = getCurrentAccount();
+  if (!acct) return;
+
+  const filter = state.txFilter || 'all';
+  document.querySelectorAll('#tx-filter-bar .chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.filter === filter);
+  });
+
+  const items = filter === 'all'
+    ? (acct.transactions || [])
+    : (acct.transactions || []).filter(t => t.type === filter);
+
+  const filterLabel = filter === 'deposit' ? 'recharges' : filter;
+  const listEl = document.getElementById('transactions-list');
+  if (!items.length) {
+    listEl.innerHTML = `<div class="card"><div class="muted-note">No transactions found under "${escapeHtml(filterLabel)}".</div></div>`;
+  } else {
+    listEl.innerHTML = items.map(tx => {
+      const badgeCls = tx.status === 'Pending' ? 'pill-amber' : (tx.status === 'Rejected' ? 'pill-muted' : 'pill-green');
+      return `
+        <div class="list-row">
+          <div class="row-main">
+            <div class="row-title">${escapeHtml(tx.title)}</div>
+            <div class="row-sub">${escapeHtml(tx.date)} · <span style="text-transform:capitalize;">${tx.type === 'deposit' ? 'recharge' : escapeHtml(tx.type)}</span></div>
+          </div>
+          <div class="row-right">
+            <div class="row-amount ${tx.amount >= 0 ? 'amt-pos' : 'amt-neg'}">${tx.amount >= 0 ? '+' : ''}${formatUGX(tx.amount)}</div>
+            <span class="pill-badge ${badgeCls}">${escapeHtml(tx.status)}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+}
+
+function renderNotifications() {
+  const acct = getCurrentAccount();
+  if (!acct) return;
+
+  const listEl = document.getElementById('notifications-list');
+  const notifs = acct.notifications || [];
+  if (!notifs.length) {
+    listEl.innerHTML = `<div class="card"><div class="muted-note">No notifications available.</div></div>`;
+    return;
+  }
+
+  listEl.innerHTML = notifs.map(n => `
+    <div class="card ${n.read ? '' : 'notif-unread'}" style="cursor:pointer;" onclick="markNotificationRead('${escapeHtml(n.id)}')">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <div style="font-size:13.5px; font-weight:700; color:var(--sage-900);">${escapeHtml(n.title)}</div>
+        ${n.read ? `<span class="muted-note" style="font-size:11px;">Read</span>` : `<span class="pill-badge pill-amber">Unread</span>`}
+      </div>
+      <div class="muted-note" style="color:var(--sage-800);">${escapeHtml(n.message)}</div>
+      <div class="muted-note" style="font-size:11px; margin-top:6px;">${escapeHtml(n.date)}</div>
+    </div>
+  `).join('');
+}
+
+function renderSettings() {
+  const user = getCurrentUser();
+  if (!user) return;
+  document.getElementById('set-username').textContent = user.username || '—';
+  document.getElementById('set-phone').textContent = user.phone || '—';
+  document.getElementById('set-ref').textContent = user.referralCode || '—';
+}
+
+function setAlert(elId, msg, type = 'error') {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  el.className = `alert alert-${type} show`;
+  el.textContent = msg;
+}
+
+function clearAlert(elId) {
+  const el = document.getElementById(elId);
+  if (el) el.className = 'alert';
+}
+
+
+// Password Visibility Toggles & Static Form Listeners
+const EYE_OPEN = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+const EYE_CLOSED = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+
+document.querySelectorAll('.pwd-toggle').forEach(btn => {
+  btn.innerHTML = EYE_OPEN;
+  btn.addEventListener('click', () => {
+    const input = document.getElementById(btn.dataset.target);
+    if (!input) return;
+    const isHidden = input.type === 'password';
+    input.type = isHidden ? 'text' : 'password';
+    btn.innerHTML = isHidden ? EYE_CLOSED : EYE_OPEN;
+  });
+});
+
+document.getElementById('wit-amount')?.addEventListener('input', updateWithdrawCalc);
+
+document.getElementById('tx-filter-bar')?.addEventListener('click', (e) => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  state.txFilter = chip.dataset.filter;
+  renderTransactions();
+});
+</script>
+
+<script id="capitalloop-diagnostics">
+(function() {
+  if (window.CAPITALLOOP_DIAGNOSTICS) return;
+
+  const CHECKLIST_ITEMS = [
+    { id: 'sdk_load', label: 'Frontend Runtime' },
+    { id: 'session_restore', label: 'Session Restoration' },
+    { id: 'backend_health', label: 'Backend Health Check' },
+    { id: 'auth_register', label: 'Phone Registration' },
+    { id: 'auth_login', label: 'Phone Sign-In' },
+    { id: 'referral_validate', label: 'Referral Validation' },
+    { id: 'snapshot_load', label: 'Authoritative Snapshot' },
+    { id: 'deposit_submit', label: 'Recharge Submission' },
+    { id: 'purchase_create', label: 'Package Purchase' },
+    { id: 'hire_countdown', label: 'Active Hire Countdown' },
+    { id: 'withdrawal_request', label: 'Withdrawal Request' },
+    { id: 'notifications_ledger', label: 'Notifications & Ledger' }
+  ];
+
+  const checklistState = new Map(
+    CHECKLIST_ITEMS.map(item => [item.id, { ...item, status: 'not_tested', detail: '', updatedAt: null }])
+  );
+  const errors = new Map();
+  const startedAt = new Date().toISOString();
+  let lastHealthReport = null;
+
+  function redactSensitive(value) {
+    return String(value ?? '')
+      .replace(/Bearer\s+[A-Za-z0-9\-_.]+/ig, 'Bearer [REDACTED]')
+      .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/ig, '[EMAIL REDACTED]')
+      .replace(/(userJwt|jwt|password|secret|sessionToken|x-appwrite-key|apiKey)["':=\s]+[^\s,"'}]+/ig, '$1=[REDACTED]')
+      .slice(0, 600);
+  }
+
+  function computeCoverage() {
+    const all = [...checklistState.values()];
+    const passed = all.filter(x => x.status === 'passed').length;
+    const failed = all.filter(x => x.status === 'failed').length;
+    const pending = all.filter(x => x.status === 'pending').length;
+    const notTested = all.filter(x => x.status === 'not_tested').length;
+    const percent = Math.round((passed / all.length) * 100);
+    return { total: all.length, passed, failed, pending, notTested, percent };
+  }
+
+  function statusBadgeHtml(st) {
+    if (st === 'passed') return '<span style="background:#dcfce7;color:#166534;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700;">Passed</span>';
+    if (st === 'failed') return '<span style="background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700;">Failed</span>';
+    if (st === 'pending') return '<span style="background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700;">Pending</span>';
+    return '<span style="background:#f1f5f9;color:#475569;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700;">Not tested</span>';
+  }
+
+  function recommendationFor(code, message) {
+    const map = {
+      SERVER_API_KEY_MISSING: 'Add CAPITALLOOP_API_KEY to the Function environment variables using a key created in the CAPITALLOOP project.',
+      SERVER_SCOPE_CONFIG_ERROR: 'Add the required TablesDB scopes to the CAPITALLOOP Function API key, then redeploy/retest.',
+      DATABASE_UNREACHABLE: 'Verify CAPITALLOOP_ENDPOINT, CAPITALLOOP_PROJECT_ID, CAPITALLOOP_DATABASE_ID and the Function API key.',
+      TABLE_NOT_FOUND: 'Check the table ID against the supplied CAPITALLOOP schema and confirm the table exists.',
+      COLUMN_NOT_FOUND: 'The backend is using a column that is not in the supplied schema; align the field mapping before retrying.',
+      SESSION_REQUIRED: 'Sign in again to create a valid custom session.',
+      SESSION_INVALID: 'Sign in again; the session may have expired or been revoked.',
+      PHONE_ALREADY_REGISTERED: 'Sign in with the existing account instead of registering the same phone again.',
+      INVALID_CREDENTIALS: 'Check the phone number and password. Do not create another account to work around this error.',
+      BACKEND_UNREACHABLE: 'Check the Function URL, deployment status and network connection.',
+      INTERNAL_SERVICE_ERROR: 'Open the matching Appwrite Function execution log and inspect the exact server error.'
+    };
+    return map[code] || (message ? 'Check the matching Function execution log and confirm the reported table/column or permission.' : 'Run Full Diagnostics and inspect the related Function execution.');
+  }
+
+  function render() {
+    const rows = [...errors.values()];
+    const unresolvedOccurrences = rows.filter(x => !x.resolved).reduce((n, x) => n + x.count, 0);
+    const totalOccurrences = rows.reduce((n, x) => n + x.count, 0);
+    const cov = computeCoverage();
+
+    const badge = document.getElementById('cl-diag-count');
+    if (badge) {
+      badge.textContent = unresolvedOccurrences > 99 ? '99+' : String(unresolvedOccurrences);
+      badge.style.background = unresolvedOccurrences > 0 ? '#d94b43' : '#23966f';
+    }
+
+    const hp = document.getElementById('cl-diag-health');
+    if (hp) hp.textContent = cov.percent + '%';
+
+    const bar = document.getElementById('cl-diag-bar');
+    if (bar) bar.style.width = cov.percent + '%';
+
+    const sum = document.getElementById('cl-diag-summary');
+    if (sum) {
+      sum.textContent = `${cov.passed}/${cov.total} verified · ${cov.failed} failed · ${cov.pending} pending · ${unresolvedOccurrences} unresolved error(s)`;
+    }
+
+    const checklistEl = document.getElementById('cl-diag-checklist');
+    if (checklistEl) {
+      checklistEl.innerHTML = [...checklistState.values()].map(item => `
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #eef2ef;font-size:12.5px;">
+          <div>
+            <strong style="color:#17231f;">${redactSensitive(item.label)}</strong>
+            ${item.detail ? `<div class="cl-diag-muted">${redactSensitive(item.detail)}</div>` : ''}
+          </div>
+          ${statusBadgeHtml(item.status)}
+        </div>
+      `).join('');
+    }
+
+    const list = document.getElementById('cl-diag-errors');
+    if (list) {
+      list.innerHTML = rows.length
+        ? rows.slice().reverse().map(x => `
+            <article class="cl-diag-item" style="${x.resolved ? 'opacity:0.65;' : ''}">
+              <div style="display:flex;justify-content:space-between;gap:8px;">
+                <b>${redactSensitive(x.layer)} · ${x.status ? 'HTTP ' + redactSensitive(x.status) : 'Client'}${x.code ? ' · ' + redactSensitive(x.code) : ''}</b>
+                <span style="font-size:11px;font-weight:700;color:${x.resolved ? '#166534' : '#991b1b'};">${x.resolved ? 'Resolved' : 'Unresolved'}</span>
+              </div>
+              <div><b>Error:</b> ${redactSensitive(x.message)}</div>
+              <div class="cl-diag-muted"><b>What to do:</b> ${redactSensitive(x.recommendation || recommendationFor(x.code, x.message))}</div>
+              <button type="button" data-copy-error="${encodeURIComponent([x.layer,x.status,x.code,x.action,x.message,x.recommendation || recommendationFor(x.code,x.message),x.executionId || ''].join(' | '))}" style="margin-top:6px;background:#eef2ef;color:#17231f;font-size:11px;padding:5px 8px;">Copy this error</button>
+              <small>Action: ${redactSensitive(x.action)} · Count: ${x.count} · First: ${redactSensitive(x.firstSeen)} · Last: ${redactSensitive(x.lastSeen)}</small>
+              ${x.executionId ? `<div class="cl-diag-muted">Execution ID: ${redactSensitive(x.executionId)}</div>` : ''}
+            </article>
+          `).join('')
+        : '<div class="cl-diag-item">No errors captured in this browser session.</div>';
+    }
+
+    const healthOut = document.getElementById('cl-diag-server-health');
+    if (healthOut && lastHealthReport) {
+      healthOut.textContent = JSON.stringify(lastHealthReport);
+    }
+  }
+
+  function record(err, source = 'frontend') {
+    const d = err?.diagnostic || {};
+    const nowIso = new Date().toISOString();
+    const row = {
+      layer: d.layer || source,
+      status: d.status || 0,
+      code: d.code || null,
+      action: d.action || source,
+      message: redactSensitive(d.rawMessage || err?.message || err),
+      recommendation: redactSensitive(d.recommendation || recommendationFor(d.code, d.rawMessage || err?.message || err)),
+      executionId: d.executionId || null,
+      count: 1,
+      resolved: false,
+      firstSeen: nowIso,
+      lastSeen: nowIso
+    };
+    const key = [row.layer, row.code, row.action].join('|');
+    if (errors.has(key)) {
+      const old = errors.get(key);
+      old.count += 1;
+      old.resolved = false;
+      old.lastSeen = nowIso;
+      if (row.executionId) old.executionId = row.executionId;
+    } else {
+      errors.set(key, row);
+    }
+    render();
+  }
+
+  function markStep(stepId, status, detail = '') {
+    const existing = checklistState.get(stepId);
+    if (!existing) return;
+    existing.status = status;
+    existing.detail = redactSensitive(detail);
+    existing.updatedAt = new Date().toISOString();
+    render();
+  }
+
+  function clearErrorHistory() {
+    errors.clear();
+    for (const item of checklistState.values()) {
+      if (item.status === 'failed') {
+        item.status = 'pending';
+        item.detail = 'Cleared for a fresh test';
+        item.updatedAt = new Date().toISOString();
+      }
+    }
+    render();
+  }
+
+  function setServerHealth(report) {
+    lastHealthReport = report;
+    render();
+  }
+
+  window.addEventListener('error', event => record({ message: event.message || 'Browser runtime error', diagnostic: { layer: 'browser-runtime', action: 'window.error', rawMessage: event.message || 'Unknown browser error' } }, 'browser-runtime'));
+  window.addEventListener('unhandledrejection', event => record({ message: event.reason?.message || String(event.reason || 'Unhandled promise rejection'), diagnostic: { layer: 'browser-runtime', action: 'unhandledrejection', rawMessage: event.reason?.message || String(event.reason || 'Unhandled promise rejection') } }, 'browser-runtime'));
+
+  window.CAPITALLOOP_DIAGNOSTICS = {
+    record,
+    markStep,
+    clearErrorHistory,
+    setServerHealth,
+    exportReport() {
+      const rows = [...errors.values()];
+      const cov = computeCoverage();
+      return JSON.stringify({
+        product: 'CAPITALLOOP',
+        generatedAt: new Date().toISOString(),
+        sessionStartedAt: startedAt,
+        workflowCoverage: cov,
+        checklist: [...checklistState.values()],
+        serverHealthCheck: lastHealthReport,
+        uniqueErrorCount: rows.length,
+        unresolvedOccurrences: rows.filter(r => !r.resolved).reduce((n, r) => n + r.count, 0),
+        errors: rows,
+        scopeAndLimitations: 'Captures browser runtime errors, frontend runtime and Appwrite Function outcomes, backend error details and execution IDs. Passwords, session tokens, API keys, secrets, and email strings are redacted. Private Appwrite Function server logs remain only in the Appwrite Console.'
+      }, null, 2);
+    }
+  };
+
+  addEventListener('error', e => record({ message: e.message || 'Script error', diagnostic: { layer: 'browser-runtime', action: 'window.error' } }, 'browser-runtime'));
+  addEventListener('unhandledrejection', e => record({ message: e.reason?.message || e.reason || 'Unhandled promise rejection', diagnostic: { layer: 'browser-runtime', action: 'unhandledrejection' } }, 'browser-runtime'));
+
+  const style = document.createElement('style');
+  style.textContent = `#cl-diag-launch{position:fixed;right:14px;bottom:calc(94px + env(safe-area-inset-bottom));z-index:999999;background:#173f35;color:white;border:0;border-radius:99px;padding:11px 14px;font-weight:800;font-size:12.5px;cursor:pointer;box-shadow:0 7px 24px #0004}#cl-diag-count{background:#23966f;border-radius:99px;padding:2px 7px;margin-left:6px;font-size:11px}#cl-diag-panel{display:none;position:fixed;inset:0;z-index:99999;background:#0009;align-items:flex-end;justify-content:center;padding:12px}#cl-diag-panel.open{display:flex}#cl-diag-sheet{background:white;color:#17231f;width:min(720px,100%);max-height:88dvh;overflow:auto;border-radius:20px;padding:18px;font:14px/1.5 system-ui}#cl-diag-sheet button{border:0;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer}.cl-diag-item{border:1px solid #e3e9e5;border-radius:11px;padding:11px;margin-top:9px;overflow-wrap:anywhere}.cl-diag-muted{font-size:12px;color:#68756f}.cl-diag-meter{height:9px;background:#e7ece9;border-radius:99px;overflow:hidden;margin:6px 0}.cl-diag-meter i{display:block;height:100%;background:#23966f;width:0%;transition:width .25s ease}@media(min-width:700px){#cl-diag-panel{align-items:center}}`;
+  document.head.appendChild(style);
+
+  const btn = document.createElement('button');
+  btn.id = 'cl-diag-launch';
+  btn.type = 'button';
+  btn.textContent = 'DIAGNOSE SYSTEM ';
+  btn.setAttribute('aria-label', 'Open CAPITALLOOP system diagnostics');
+  btn.title = 'Check CAPITALLOOP connection, account, deposits and other workflows';
+  const count = document.createElement('span');
+  count.id = 'cl-diag-count';
+  count.textContent = '0';
+  btn.appendChild(count);
+
+  const panel = document.createElement('div');
+  panel.id = 'cl-diag-panel';
+  panel.innerHTML = `<section id="cl-diag-sheet" role="dialog" aria-modal="true" aria-label="System Diagnostics">
+    <header style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:10px;">
+      <div>
+        <b style="font-size:18px">CAPITALLOOP Diagnostics</b>
+        <div class="cl-diag-muted">Full-system health, concise errors &amp; recommended fixes</div>
+      </div>
+      <button type="button" id="cl-diag-close" style="background:#eef2ef;color:#17231f;">Close</button>
+    </header>
+    <div class="cl-diag-item">
+      <b>Verified workflow coverage</b>
+      <strong id="cl-diag-health" style="float:right">0%</strong>
+      <div class="cl-diag-meter"><i id="cl-diag-bar"></i></div>
+      <div id="cl-diag-summary" class="cl-diag-muted">Initializing…</div>
+    </div>
+    <div class="cl-diag-item">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;">
+        <b>Workflow Checklist</b>
+        <button type="button" id="cl-diag-run-health" style="background:#173f35;color:white;font-size:12px;padding:6px 10px;">Run Full Diagnostics</button>
+      </div>
+      <div id="cl-diag-server-health" class="cl-diag-muted" style="margin-bottom:6px;word-break:break-word;"></div>
+      <div id="cl-diag-checklist"></div>
+    </div>
+    <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;">
+      <b>Errors and Function Responses</b>
+      <button type="button" id="cl-diag-resolve" style="background:#eef2ef;color:#17231f;font-size:12px;padding:6px 10px;">Clear Errors &amp; Reset Failed Checks</button>
+    </div>
+    <div id="cl-diag-errors"></div>
+    <p style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
+      <button type="button" id="cl-diag-copy" style="background:#173f35;color:white;">Copy Complete Report</button>
+      <button type="button" id="cl-diag-refresh" style="background:#eef2ef;color:#17231f;">Refresh</button>
+    </p>
+    <p class="cl-diag-muted">Note: Browser-captured errors and Appwrite Function responses (including execution IDs) appear here. Secrets, passwords, JWTs, and emails are redacted. Private Appwrite Console server logs must be viewed in Appwrite Console.</p>
+  </section>`;
+
+  document.body.append(btn, panel);
+  btn.onclick = () => { render(); panel.classList.add('open'); };
+  panel.onclick = e => { if (e.target === panel) panel.classList.remove('open'); };
+  document.getElementById('cl-diag-close').onclick = () => panel.classList.remove('open');
+  document.getElementById('cl-diag-refresh').onclick = render;
+  document.getElementById('cl-diag-resolve').onclick = clearErrorHistory;
+  panel.addEventListener('click', async (event) => {
+    const copyError = event.target.closest('[data-copy-error]');
+    if (!copyError) return;
+    const value = decodeURIComponent(copyError.getAttribute('data-copy-error') || '');
+    try { await navigator.clipboard.writeText(value); } catch (_) {
+      const t = document.createElement('textarea'); t.value = value; document.body.append(t); t.select(); document.execCommand('copy'); t.remove();
+    }
+    copyError.textContent = 'Copied';
+  });
+
+  document.getElementById('cl-diag-copy').onclick = async () => {
+    const text = window.CAPITALLOOP_DIAGNOSTICS.exportReport();
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (_) {
+      const t = document.createElement('textarea');
+      t.value = text;
+      document.body.append(t);
+      t.select();
+      document.execCommand('copy');
+      t.remove();
+    }
+    const copyBtn = document.getElementById('cl-diag-copy');
+    copyBtn.textContent = 'Report Copied';
+    setTimeout(() => { copyBtn.textContent = 'Copy Complete Report'; }, 2000);
+  };
+
+  render();
+})();
+</script>
+
+<script>
+/* ==========================================================================
+   CAPITALLOOP CUSTOM PROFILE + SESSION INTEGRATION
+   Appwrite Auth is not used. All protected requests carry a hashed-session-backed bearer token.
+   ========================================================================== */
+(async function CAPITALLOOP_APPWRITE_BOOT() {
+  const appShell = document.querySelector('.app-shell');
+  const diag = window.CAPITALLOOP_DIAGNOSTICS;
+  const ENDPOINT = 'https://fra.cloud.appwrite.io/v1';
+  const PROJECT_ID = '6af99986000f7855d812';
+  const FUNCTION_URL = 'https://starter-function-hlk9.fra.appwrite.run';
+  const SESSION_KEY = 'capitalloop_custom_session_v1';
+
+  const $ = id => document.getElementById(id);
+
+  // Prefill optional referral code from ?ref= query parameter
+  try {
+    const params = new URLSearchParams(location.search);
+    const refParam = (params.get('ref') || '').trim().toUpperCase();
+    if (refParam && $('reg-ref') && !$('reg-ref').value) {
+      $('reg-ref').value = refParam;
+    }
+  } catch (_) {}
+
+  let sessionToken = '';
+  let refreshBusy = false;
+  let snapshotInterval = null;
+  let maturitySettlingTimer = null;
+  try { sessionToken = sessionStorage.getItem(SESSION_KEY) || ''; } catch (_) {}
+
+  diag?.markStep('sdk_load', 'passed', 'Frontend JavaScript initialized; direct Function endpoint configured');
+
+  function clearSession() {
+    sessionToken = '';
+    try { sessionStorage.removeItem(SESSION_KEY); } catch (_) {}
+    liveUser = null;
+    liveAccount = null;
+    liveSettings = {};
+  }
+
+  async function executeFunction(action, payload = {}, opts = {}) {
+    const requireAuth = opts.requireAuth !== false;
+    const headers = { 'content-type': 'application/json' };
+    if (requireAuth) {
+      if (!sessionToken) throw new Error('Please sign in to continue.');
+      headers.authorization = `Bearer ${sessionToken}`;
+    }
+    let response;
+    let result = {};
+    try {
+      response = await fetch(FUNCTION_URL, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ action, ...payload })
+      });
+    } catch (fetchErr) {
+      const err = new Error('Could not reach the CAPITALLOOP backend Function.');
+      err.diagnostic = { layer: 'frontend-network', status: 0, code: 'BACKEND_UNREACHABLE', action, rawMessage: fetchErr?.message || 'Fetch failed', recommendation: 'Verify the deployed Function URL and that the Function is active.' };
+      diag?.record(err, action);
+      throw err;
+    }
+    const executionId = response.headers.get('x-appwrite-execution-id') || null;
+    const rawBody = await response.text();
+    try { result = JSON.parse(rawBody || '{}'); }
+    catch (_) {
+      const err = new Error('The backend returned a response that is not valid JSON.');
+      err.diagnostic = { layer: 'appwrite-function', status: response.status, code: 'INVALID_FUNCTION_RESPONSE', action, executionId, rawMessage: rawBody.slice(0, 500) };
+      diag?.record(err, action); throw err;
+    }
+    if (!response.ok || result.ok === false) {
+      const code = result.code || `HTTP_${response.status}`;
+      const message = result.error || `Function request failed with HTTP ${response.status}.`;
+      const err = new Error(message);
+      err.code = code;
+      err.status = response.status;
+      err.diagnostic = {
+        layer: result.diagnostic?.layer || 'appwrite-function', status: response.status, code,
+        action, executionId, rawMessage: result.diagnostic?.detail || message,
+        recommendation: result.diagnostic?.recommendation || recommendationForFrontend(code)
+      };
+      diag?.record(err, action);
+      if (requireAuth && (response.status === 401 || code === 'SESSION_INVALID' || code === 'SESSION_REQUIRED')) {
+        clearSession();
+        navHistory = ['login'];
+        navigateTo('login', false);
+      }
+      throw err;
+    }
+    return result;
+  }
+
+  function recommendationForFrontend(code) {
+    const fixes = {
+      SERVER_API_KEY_MISSING: 'Add CAPITALLOOP_API_KEY to the Function environment variables.',
+      SERVER_SCOPE_CONFIG_ERROR: 'Add databases.read, tables.read, columns.read, rows.read and rows.write to the CAPITALLOOP Function key, then redeploy.',
+      DATABASE_UNREACHABLE: 'Check the Function endpoint, project ID, database ID and API key.',
+      TABLE_NOT_FOUND: 'Check the exact table ID in the Function environment variables.',
+      COLUMN_NOT_FOUND: 'Align the backend column name with the actual Appwrite table schema.',
+      SESSION_INVALID: 'Sign in again to create a fresh session.',
+      INVALID_CREDENTIALS: 'Check the phone number and password.',
+      PHONE_ALREADY_REGISTERED: 'Use Sign In for this phone number.',
+      PASSWORD_MIGRATION_REQUIRED: 'This existing profile has no custom password hash yet. A secure password migration/reset is required before that customer can sign in.'
+    };
+    return fixes[code] || 'Open the matching Function execution log and check the exact server error.';
+  }
+
+  function applySnapshot(data, sessionUser) {
+    const p = data.profile || {};
+    liveUser = {
+      id: p.id || data.userId || sessionUser?.id || '',
+      username: p.username || sessionUser?.username || 'Member',
+      phone: p.phone || '',
+      referralCode: p.referralCode || ''
+    };
+    liveAccount = {
+      depositBalance: Number(p.depositBalance || 0),
+      withdrawableBalance: Number(p.withdrawableBalance || 0),
+      lockedEarnings: Number(p.lockedEarningsBalance || 0),
+      totalReferralRewards: Number(data.totalReferralRewards || 0),
+      totalDeposited: Number(p.totalDeposited || 0),
+      totalWithdrawn: Number(p.totalWithdrawn || 0),
+      hires: Array.isArray(data.purchases) ? data.purchases : [],
+      transactions: Array.isArray(data.transactions) ? data.transactions : [],
+      referrals: Array.isArray(data.referrals) ? data.referrals : [],
+      notifications: Array.isArray(data.notifications) ? data.notifications : [],
+      deposits: Array.isArray(data.deposits) ? data.deposits : [],
+      withdrawals: Array.isArray(data.withdrawals) ? data.withdrawals : []
+    };
+    liveSettings = data.settings || {};
+    state.users = [liveUser];
+    state.currentUserPhone = liveUser.phone;
+    state.accountData = { [liveUser.phone]: liveAccount };
+    paintLiveSettings();
+  }
+
+  function paintLiveSettings() {
+    const recipientPhone = liveSettings.depositRecipientPhone || '';
+    const recipientName = liveSettings.depositRecipientName || 'CAPITALLOOP COLLECTIONS LTD';
+    const groupLink = liveSettings.whatsappGroupLink || '';
+
+    const numEl = $('dep-recipient-num');
+    if (numEl) numEl.textContent = recipientPhone || 'Contact support';
+
+    const recipientCard = document.querySelector('#screen-deposit .card-sage');
+    if (recipientCard) {
+      const vals = recipientCard.querySelectorAll('.kv-val');
+      if (vals[0]) vals[0].textContent = recipientName;
+      if (vals[1]) vals[1].textContent = liveSettings.depositNetwork || 'MTN MoMo / Airtel Money';
+    }
+
+    let groupCard = $('capitalloop-group-link-card');
+    if (!groupCard) {
+      groupCard = document.createElement('div');
+      groupCard.id = 'capitalloop-group-link-card';
+      groupCard.className = 'card';
+      const settingsScreen = $('screen-settings');
+      if (settingsScreen) settingsScreen.appendChild(groupCard);
+    }
+    groupCard.innerHTML = groupLink
+      ? `<div style="font-weight:700;color:var(--sage-900);margin-bottom:6px;">Official CAPITALLOOP Community</div><p class="muted-note" style="margin-bottom:10px;">Join the official community using the current administrator link.</p><a class="btn btn-primary btn-block" style="display:block;text-align:center;text-decoration:none;line-height:42px;" href="${escapeHtml(groupLink)}" target="_blank" rel="noopener noreferrer">Join WhatsApp Group</a>`
+      : `<div style="font-weight:700;color:var(--sage-900);">Official CAPITALLOOP Community</div><p class="muted-note">The group link has not been configured yet.</p>`;
+  }
+
+  async function refreshSnapshot(shouldRender = true) {
+    if (refreshBusy) return null;
+    refreshBusy = true;
+    try {
+      const data = await executeFunction('snapshot', {}, { requireAuth: true });
+      applySnapshot(data, data.profile || {});
+      diag?.markStep('snapshot_load', 'passed', 'Account details refreshed');
+      if (shouldRender) renderActiveScreen();
+      return data;
+    } catch (err) {
+      diag?.markStep('snapshot_load', 'failed', err?.message || 'Snapshot load failed');
+      throw err;
+    } finally {
+      refreshBusy = false;
+    }
+  }
+
+  async function establishCustomSession(authResult) {
+    if (!authResult?.sessionToken) throw new Error('The backend did not return a session token.');
+    sessionToken = authResult.sessionToken;
+    try { sessionStorage.setItem(SESSION_KEY, sessionToken); } catch (_) {}
+    applySnapshot({ profile: authResult.profile, userId: authResult.userId, settings: {} }, authResult.profile || {});
+    try {
+      await refreshSnapshot(false);
+      return { profile: authResult.profile, snapshotSynced: true };
+    } catch (snapshotError) {
+      // Authentication is already established. Keep the session and let the dashboard retry;
+      // do not misreport a snapshot/database-read issue as failed registration or login.
+      diag?.markStep('snapshot_load', 'failed', snapshotError?.message || 'Account data is temporarily unavailable.');
+      return { profile: authResult.profile, snapshotSynced: false };
+    }
+  }
+
+  async function runDiagnosticsHealthCheck() {
+    try {
+      const res = await executeFunction('diagnostics.health', {}, { requireAuth: false });
+      diag?.setServerHealth(res);
+      const isOk = res.status === 'healthy';
+      diag?.markStep('backend_health', isOk ? 'passed' : 'failed', `Status: ${res.status}`);
+      return res;
+    } catch (err) {
+      diag?.markStep('backend_health', 'failed', err?.message || 'Health check failed');
+      return null;
+    }
+  }
+
+  const runHealthBtn = document.getElementById('cl-diag-run-health');
+  if (runHealthBtn) {
+    runHealthBtn.onclick = async () => {
+      runHealthBtn.disabled = true;
+      runHealthBtn.textContent = 'Checking…';
+      const health = await runDiagnosticsHealthCheck();
+      if (sessionToken) {
+        try { await refreshSnapshot(false); diag?.markStep('snapshot_load', 'passed', 'Authenticated snapshot check passed'); }
+        catch (err) { diag?.markStep('snapshot_load', 'failed', err.message); }
+      }
+      runHealthBtn.disabled = false;
+      runHealthBtn.textContent = 'Run Full Diagnostics';
+    };
+  }
+
+  // Expose server-backed interaction handlers globally for existing inline buttons
+  window.markNotificationRead = async (id) => {
+    try {
+      await executeFunction('notification.read', { notificationId: id }, { requireAuth: true });
+      diag?.markStep('notifications_ledger', 'passed', 'Notification marked read');
+      await refreshSnapshot(true);
+    } catch (err) {
+      diag?.markStep('notifications_ledger', 'failed', err?.message);
+      showToast(err.message || 'Could not update notification.');
+    }
+  };
+
+  window.markAllNotificationsRead = async () => {
+    try {
+      await executeFunction('notification.readAll', {}, { requireAuth: true });
+      diag?.markStep('notifications_ledger', 'passed', 'All notifications marked read');
+      await refreshSnapshot(true);
+      showToast('All notifications marked as read');
+    } catch (err) {
+      diag?.markStep('notifications_ledger', 'failed', err?.message);
+      showToast(err.message || 'Could not update notifications.');
+    }
+  };
+
+  window.handleLogout = async () => {
+    try { if (sessionToken) await executeFunction('session.logout', {}, { requireAuth: true }); } catch (_) {}
+    clearSession();
+    state = createDefaultState();
+    navHistory = ['login'];
+    navigateTo('login');
+    showToast('Signed out');
+  };
+
+  let purchaseBusy = false;
+  window.executePurchaseHire = async () => {
+    if (purchaseBusy) return;
+    purchaseBusy = true;
+    const btn = $('confirm-hire-btn');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Activating Hire...';
+    }
+    try {
+      const result = await executeFunction(
+        'purchase.create',
+        { packageId: state.selectedPackageId, durationHours: Number(state.selectedDuration) },
+        { requireAuth: true }
+      );
+      diag?.markStep('purchase_create', 'passed', `Hire ${result.purchaseId} started`);
+      await refreshSnapshot(false);
+      const hire = (liveAccount?.hires || []).find(h => h.id === result.purchaseId) || result.purchase || null;
+      renderPurchaseConfirmation(hire);
+      showToast('Hire activated successfully');
+    } catch (err) {
+      diag?.markStep('purchase_create', 'failed', err?.message);
+      showToast(err.message || 'Could not start package hire.');
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Confirm & Start Hire';
+      }
+    } finally {
+      purchaseBusy = false;
+    }
+  };
+
+  // Auth & Financial Forms
+  document.getElementById('login-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearAlert('login-alert');
+
+    const phone = normalizeUgandanPhone($('login-phone').value);
+    const password = $('login-password').value;
+
+    if (!phone) {
+      setAlert('login-alert', 'Enter a valid 10-digit phone number starting with 07.');
+      return;
+    }
+    if (!password) {
+      setAlert('login-alert', 'Please enter your account password.');
+      return;
+    }
+
+    const submitBtn = $('login-submit-btn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing In...';
+    }
+
+    try {
+      const res = await executeFunction('auth.login', { phone, password }, { requireAuth: false });
+      const sessionResult = await establishCustomSession(res);
+      $('login-password').value = '';
+      diag?.markStep('auth_login', 'passed', 'Signed in with phone and password');
+      diag?.markStep('session_restore', 'passed', 'Active session established');
+      clearAlert('login-alert');
+      navHistory = ['home'];
+      navigateTo('home');
+      showToast(sessionResult.snapshotSynced
+        ? `Signed in as ${liveUser?.username || 'Member'}`
+        : 'Signed in. Your account details will appear shortly.');
+    } catch (err) {
+      diag?.markStep('auth_login', 'failed', err?.message);
+      setAlert('login-alert', err.message || 'Unable to sign in. Please check your details and try again.');
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign In';
+      }
+    }
+  });
+
+  document.getElementById('register-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearAlert('reg-alert');
+
+    const username = $('reg-username').value.trim();
+    const phone = normalizeUgandanPhone($('reg-phone').value);
+    const password = $('reg-password').value;
+    const confirm = $('reg-confirm').value;
+    const referralCode = $('reg-ref').value.trim().toUpperCase();
+
+    if (username.length < 2) {
+      setAlert('reg-alert', 'Please enter a valid username (at least 2 characters).');
+      return;
+    }
+    if (!phone) {
+      setAlert('reg-alert', 'Phone number must follow the 10-digit format 07XXXXXXXX.');
+      return;
+    }
+    if (password.length < 8) {
+      setAlert('reg-alert', 'Password must be at least 8 characters long.');
+      return;
+    }
+    if (password !== confirm) {
+      setAlert('reg-alert', 'Password confirmation does not match.');
+      return;
+    }
+
+    const submitBtn = $('reg-submit-btn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating Account...';
+    }
+
+    try {
+      if (referralCode) {
+        const refRes = await executeFunction('referral.validate', { referralCode }, { requireAuth: false });
+        if (!refRes.valid) {
+          diag?.markStep('referral_validate', 'failed', 'Entered referral code not found');
+          setAlert('reg-alert', 'The referral code you entered was not found. Check it or leave it blank.');
+          return;
+        }
+        diag?.markStep('referral_validate', 'passed', 'Referral code verified');
+      }
+
+      const regRes = await executeFunction(
+        'auth.register',
+        { username, phone, password, referralCode },
+        { requireAuth: false }
+      );
+      const sessionResult = await establishCustomSession(regRes);
+      $('reg-password').value = '';
+      $('reg-confirm').value = '';
+      diag?.markStep('auth_register', 'passed', 'Profile account created and custom session established');
+      diag?.markStep('session_restore', 'passed', 'Active session established');
+      clearAlert('reg-alert');
+      navHistory = ['home'];
+      navigateTo('home');
+      showToast(sessionResult.snapshotSynced
+        ? 'Your CAPITALLOOP account is ready.'
+        : 'Your account is ready.');
+    } catch (err) {
+      diag?.markStep('auth_register', 'failed', err?.message);
+      setAlert('reg-alert', err.message || 'Unable to create account right now. Please try again.');
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create Account';
+      }
+    }
+  });
+
+  document.getElementById('deposit-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearAlert('deposit-alert');
+
+    const network = $('dep-network').value;
+    const amount = Number($('dep-amount').value);
+    const payerPhone = normalizeUgandanPhone($('dep-payer-phone').value);
+
+    if (!Number.isFinite(amount) || amount < 5000) {
+      setAlert('deposit-alert', 'Minimum recharge amount is UGX 5,000.');
+      return;
+    }
+    if (!payerPhone) {
+      setAlert('deposit-alert', 'Enter a valid 10-digit payer phone number (07XXXXXXXX).');
+      return;
+    }
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      await executeFunction(
+        'deposit.submit',
+        { network, amount, payerPhone },
+        { requireAuth: true }
+      );
+      diag?.markStep('deposit_submit', 'passed', 'Recharge request submitted');
+      $('dep-amount').value = '';
+      await refreshSnapshot(false);
+      setAlert('deposit-alert', 'Payment prompt requested. Check your phone and approve the Mobile Money prompt. Your balance updates after confirmation.', 'success');
+      renderDeposit();
+    } catch (err) {
+      diag?.markStep('deposit_submit', 'failed', err?.message);
+      setAlert('deposit-alert', err.message || 'Could not submit recharge request.');
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+
+  document.getElementById('withdraw-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearAlert('withdraw-alert');
+
+    const amount = Number($('wit-amount').value);
+    const phone = normalizeUgandanPhone($('wit-phone').value);
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+      setAlert('withdraw-alert', 'Please enter a withdrawal amount greater than UGX 0.');
+      return;
+    }
+    if (!phone) {
+      setAlert('withdraw-alert', 'Enter a valid 10-digit destination phone number (07XXXXXXXX).');
+      return;
+    }
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      const result = await executeFunction('withdrawal.request', { amount, phone }, { requireAuth: true });
+      diag?.markStep('withdrawal_request', 'passed', `Withdrawal ${result.withdrawalId} submitted`);
+      $('wit-amount').value = '';
+      await refreshSnapshot(false);
+      updateWithdrawCalc();
+      renderWithdraw();
+      setAlert('withdraw-alert', 'Withdrawal submitted.', 'success');
+    } catch (err) {
+      diag?.markStep('withdrawal_request', 'failed', err?.message);
+      setAlert('withdraw-alert', err.message || 'Could not submit withdrawal request.');
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+
+  // Live 1-second UI countdown tick (maturity settlement remains strictly server-owned)
+  setInterval(() => {
+    if (!liveUser || !liveAccount) return;
+    const now = Date.now();
+    let needsServerMaturitySync = false;
+
+    document.querySelectorAll('.live-timer').forEach(el => {
+      const end = Number(el.dataset.end);
+      if (!end) return;
+      const rem = end - now;
+      if (rem <= 0) {
+        el.textContent = 'Settling...';
+        needsServerMaturitySync = true;
+      } else {
+        el.textContent = formatRemaining(rem) + ' left';
+      }
+    });
+
+    document.querySelectorAll('.live-progress-bar').forEach(el => {
+      const start = Number(el.dataset.start);
+      const end = Number(el.dataset.end);
+      if (start && end && end > start) {
+        const pct = Math.min(100, Math.max(2, Math.round(((now - start) / (end - start)) * 100)));
+        el.style.width = pct + '%';
+      }
+    });
+
+    document.querySelectorAll('.live-pct-text').forEach(el => {
+      const start = Number(el.dataset.pctStart);
+      const end = Number(el.dataset.pctEnd);
+      if (start && end && end > start) {
+        const pct = Math.min(100, Math.max(2, Math.round(((now - start) / (end - start)) * 100)));
+        el.textContent = pct + '% elapsed';
+      }
+    });
+
+    if (liveAccount.hires?.some(h => h.status === 'working')) {
+      diag?.markStep('hire_countdown', 'passed', 'Countdown verified against server time');
+    }
+
+    if (needsServerMaturitySync && !maturitySettlingTimer) {
+      maturitySettlingTimer = setTimeout(() => {
+        maturitySettlingTimer = null;
+        if (liveUser) refreshSnapshot(true).catch(() => {});
+      }, 2500);
+    }
+  }, 1000);
+
+  // Restore custom profile session on initial page boot.
+  if (sessionToken) {
+    try {
+      await refreshSnapshot(false);
+      diag?.markStep('session_restore', 'passed', 'Custom profile session restored');
+      const hashScreen = location.hash.replace('#', '');
+      const start = hashScreen && !AUTH_SCREENS.includes(hashScreen) && document.getElementById('screen-' + hashScreen) ? hashScreen : 'home';
+      navHistory = [start];
+      navigateTo(start, false);
+    } catch (err) {
+      clearSession();
+      diag?.markStep('session_restore', 'failed', err?.message || 'Stored session could not be verified');
+      const hashScreen = location.hash.replace('#', '');
+      const start = (hashScreen === 'register' || new URLSearchParams(location.search).has('ref')) ? 'register' : 'login';
+      navHistory = [start];
+      navigateTo(start, false);
+    }
+  } else {
+    diag?.markStep('session_restore', 'pending', 'No active custom session (visitor on Sign In screen)');
+    const hashScreen = location.hash.replace('#', '');
+    const start = (hashScreen === 'register' || new URLSearchParams(location.search).has('ref')) ? 'register' : 'login';
+    navHistory = [start];
+    navigateTo(start, false);
+  }
+
+  // Periodic authoritative refresh every 10s while signed in, plus immediate refresh on return.
+  snapshotInterval = setInterval(() => {
+    if (liveUser) refreshSnapshot(true).catch(() => {});
+  }, 10000);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && liveUser) refreshSnapshot(true).catch(() => {});
+  });
+  window.addEventListener('focus', () => {
+    if (liveUser) refreshSnapshot(true).catch(() => {});
+  });
+
+  if (appShell) appShell.style.visibility = 'visible';
+
+  // Run lightweight public backend health check in background
+  runDiagnosticsHealthCheck().catch(() => {});
+
+  window.CAPITALLOOP_APPWRITE = {
+    refresh: refreshSnapshot,
+    invoke: (action, payload, opts) => executeFunction(action, payload, opts),
+    endpoint: ENDPOINT,
+    projectId: PROJECT_ID,
+    functionUrl: FUNCTION_URL
+  };
+  document.documentElement.dataset.backend = 'appwrite';
+})();
+</script>
+
+
+
+</body>
+</html>
